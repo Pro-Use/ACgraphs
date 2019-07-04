@@ -1,8 +1,7 @@
-from flask import Flask, render_template, Markup, flash
+from flask import Flask, render_template, Markup
 from flask_socketio import SocketIO
 from time import sleep
 import feedparser
-from threading import Thread
 
 
 app = Flask(__name__)
@@ -14,6 +13,7 @@ HEADLINE = HEADLINE.replace(' ', '&nbsp;')
 RSS = ["http://feeds.bbci.co.uk/news/rss.xml"]
 TICKERS = len(RSS)
 ticker_html = [""] * len(RSS)
+list_html = [""]
 update_feeds = None
 
 def get_news_html(feed):
