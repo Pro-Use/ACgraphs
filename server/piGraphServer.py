@@ -11,9 +11,7 @@ socketio = SocketIO(app, async_mode='eventlet')
 
 HEADLINE = "'Despicable act': May confronts Putin over Salisbury poisoning. Church of England appoints its first black female bishop. I felt the fear of abduction by China in Hong Kong. Appeasing Bejing has to stop"
 HEADLINE = HEADLINE.replace(' ', '&nbsp;')
-RSS = ["http://feeds.bbci.co.uk/news/rss.xml",
-       "http://feeds.bbci.co.uk/news/rss.xml",
-       "http://feeds.bbci.co.uk/news/rss.xml"]
+RSS = ["http://feeds.bbci.co.uk/news/rss.xml"]
 TICKERS = len(RSS)
 ticker_html = [""] * len(RSS)
 update_feeds = None
