@@ -1,0 +1,214 @@
+/*  
+================================================================
+MD GRID
+================================================================  
+*/
+
+
+// Set the gutter between columns.
+$flexboxgrid-gutter-width-md: 15px !default;
+
+// Set margin for the container sides.
+$flexboxgrid-outer-margin-md: 15px !default;
+
+// Set gutters
+$gutter-compensation-md: $flexboxgrid-gutter-width-md * .5 * -1;
+$half-gutter-width-md: $flexboxgrid-gutter-width-md * .5;
+
+
+
+@mixin flexboxgrid-sass-col-common-md {
+  box-sizing: border-box;
+
+  // split @include flex(0, 0, auto) into individual props
+  @include flex-grow(0);
+  @include flex-shrink(0);
+
+  // we leave @include flex-basis(auto) out of common because
+  // in some spots we need it and some we dont
+  // more why here: https://github.com/kristoferjoseph/flexboxgrid/issues/126
+
+  padding-right: $half-gutter-width-md;
+  padding-left: $half-gutter-width-md;
+}
+
+
+
+
+
+  $name: nth($md, 1);
+  $size: nth($md, 2);
+
+  @media only screen and (min-width: $size) {
+
+
+
+    .wrapper {
+      padding-right: $flexboxgrid-outer-margin-md;
+      padding-left: $flexboxgrid-outer-margin-md;
+    }
+
+    .container-fluid {
+      padding-right: $flexboxgrid-outer-margin-md;
+      padding-left: $flexboxgrid-outer-margin-md;
+    }
+
+    .row {
+      box-sizing: border-box;
+      @include flexbox();
+      @include flex(0, 1, auto);
+      @include flex-direction(row);
+      @include flex-wrap(wrap);
+      margin-right: $gutter-compensation-md;
+      margin-left: $gutter-compensation-md;
+    }
+
+    .grid{
+      display: flex;
+      flex-wrap: wrap;
+      margin-right: $gutter-compensation-md;
+      margin-left: $gutter-compensation-md;
+    }
+
+    .row.reverse {
+      @include flex-direction(row-reverse);
+    }
+
+    .col.reverse {
+      @include flex-direction(column-reverse);
+    }
+
+
+    .col-xs {
+      @include flexboxgrid-sass-col-common-md;
+      @include flex-basis(auto);
+    }
+    @for $i from 1 through $flexboxgrid-grid-columns {
+      .col-xs-#{$i} {
+        @include flexboxgrid-sass-col-common-md;
+        @include flex-basis(100% / $flexboxgrid-grid-columns * $i);
+        width: 100% / $flexboxgrid-grid-columns * $i;
+      }
+    }
+    @for $i from 0 through $flexboxgrid-grid-columns {
+      .col-xs-offset-#{$i} {
+        @include flexboxgrid-sass-col-common-md;
+        @if $i == 0 {
+          margin-left: 0;
+        } @else {
+          margin-left: 100% / $flexboxgrid-grid-columns * $i;
+        }
+      }
+    }
+
+
+    .col-#{$name} {
+      @include flexboxgrid-sass-col-common-md;
+      @include flex-basis(auto);
+    }
+    @for $i from 1 through $flexboxgrid-grid-columns {
+      .col-#{$name}-#{$i} {
+        @include flexboxgrid-sass-col-common-md;
+        @include flex-basis(100% / $flexboxgrid-grid-columns * $i);
+        width: 100% / $flexboxgrid-grid-columns * $i;
+      }
+    }
+    @for $i from 0 through $flexboxgrid-grid-columns {
+      .col-#{$name}-offset-#{$i} {
+        @include flexboxgrid-sass-col-common-md;
+        @if $i == 0 {
+          margin-left: 0;
+        } @else {
+          margin-left: 100% / $flexboxgrid-grid-columns * $i;
+        }
+      }
+    }
+    .col-#{$name} {
+      @include flex-grow(1);
+      @include flex-basis(0);
+      max-width: 100%;
+    }
+    .start-#{$name} {
+      @include justify-content(flex-start);
+      text-align: left;
+    }
+
+    .center-#{$name} {
+      @include justify-content(center);
+      text-align: center;
+    }
+
+    .end-#{$name} {
+      @include justify-content(flex-end);
+      text-align: right;
+    }
+
+    .top-#{$name} {
+      @include align-items(flex-start);
+    }
+
+    .middle-#{$name} {
+      @include align-items(center);
+    }
+
+    .bottom-#{$name} {
+      @include align-items(flex-end);
+    }
+
+    .around-#{$name} {
+      @include justify-content(space-around);
+    }
+
+    .between-#{$name} {
+      @include justify-content(space-between);
+    }
+
+    .first-#{$name} {
+      order: -1;
+    }
+
+    .last-#{$name} {
+      order: 1;
+    }
+
+
+    .col-md-third{
+      @include flexboxgrid-sass-col-common-md;
+      @include flex-basis(33.333%);
+    }
+
+
+/*  
+================================================================
+UTILITY CLASSES
+================================================================  
+*/
+
+
+.#{$name}-visuallyhidden { 
+  position: absolute; 
+  overflow: hidden; 
+  clip: rect(0 0 0 0); 
+  height: 1px; width: 1px; 
+  margin: -1px; padding: 0; border: 0; 
+}
+
+.#{$name}-visible { 
+  position: inherit; 
+  overflow: visible; 
+  clip: auto; 
+  height: auto; width: auto; 
+}
+
+.#{$name}-hide {
+   display: none;
+}
+
+.#{$name}-show {
+   display: inline-block;
+}
+
+
+
+
+} /* End Media Query */
