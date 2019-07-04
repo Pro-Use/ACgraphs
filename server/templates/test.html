@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+{% block body %}
+<!--BODY BLOCK-->
+
+{%for i in range(0, tickers)%}
+    <div class="TickerNews">
+        <div class="ti_wrapper" style="left:{{position}}px">
+            <div id="ti_content-{{i}}">
+                {{html[i]}}
+            </div>
+        </div>
+    </div>
+{%endfor%}
+<!--END BODY-->
+{% endblock %}
