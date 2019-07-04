@@ -1,0 +1,34 @@
+/* 	
+================================================================
+Theme Name: Tom Merrell Studio
+Author: Tom Merrell Studio
+Author URI: http://www.tommerrell.com
+================================================================  
+*/
+
+ 
+
+// Base
+@import "base/normalize";
+@import "base/reset";
+@import "base/variables";
+
+
+// Components
+@import "components/typography";
+@import "components/utilities";
+@import "components/grid";
+@import "components/images";
+@import "components/flickity";
+@import "components/pages";
+// Responsive
+@import "responsive/xs"; /* mobile */
+@import "responsive/sm"; /* large mobile */
+@import "responsive/md"; /* tablet */
+@import "responsive/lg"; /* desktop */
+@import "responsive/xl"; /* large desktop */	
+
+/* @media only screen and (max-height: 600px) and (max-width: 600px) {@import "responsive/short";}*/
+/* @media screen and (max-aspect-ratio: 6/7){ @import "responsive/portrait";} */
+
+@import "responsive/print";

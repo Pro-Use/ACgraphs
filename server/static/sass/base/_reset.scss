@@ -1,0 +1,118 @@
+/* 	
+================================================================
+DEFAULTS AND RESETS
+================================================================  
+*/
+
+
+
+body, html{
+  padding:0;margin:0;
+}
+
+/* apply a natural box layout model to all elements */
+*, *:before, *:after {
+  -moz-box-sizing: border-box; -webkit-box-sizing: border-box; box-sizing: border-box;
+ }
+
+*{
+	-webkit-transform: none;  
+	webkit-backface-visibility: hidden; 
+    -moz-osx-font-smoothing: grayscale;
+    -webkit-font-smoothing: antialiased;
+}
+
+/* remove list styles*/
+ul{list-style-type:none;margin:0;padding:0;}
+
+
+
+/* Remove default fieldset styles.*/
+
+fieldset {
+    border: 0;
+    margin: 0;
+    padding: 0;
+}
+
+/* Allow only vertical resizing of textareas.*/
+
+textarea {
+    resize: vertical;
+}
+
+/* Browser Upgrade*/
+
+.browserupgrade {
+    margin: 0;
+    background: black;
+    color: white;
+    padding: 1em;
+    position:fixed;
+    top:0;left:0;
+    height:auto;
+    width:100%;
+    z-index:100000000000000000;
+}
+
+.browserupgrade a:link, .browserupgrade a:visited{
+    color:white;
+    text-decoration:underline;
+}
+
+
+/* clearfix */
+.cf:before, .cf:after{content: " ";display: table;}
+.cf:after {content: " ";visibility: hidden;display: block;height: 0;clear: both;}
+.cf {*zoom: 1;}
+
+
+/* remove paragraph margins */
+p{padding:0;margin:0;}
+figure{padding:0;margin:0;}
+
+/* break long links over lines */
+a {word-wrap: break-word;}
+
+
+/*Background Sizing*/
+.cover{-webkit-background-size: cover;-moz-background-size: cover;-o-background-size: cover;background-size:cover; background-repeat:no-repeat;background-position:center;}
+.contain{-webkit-background-size: contain;-moz-background-size: contain;-o-background-size: contain;background-size:contain; background-repeat:no-repeat;background-position:center;}
+
+.bk-top{background-position:top;}
+.bk-right{background-position:right;}
+.bk-bottom{background-position:bottom;}
+.bk-left{background-position:left;}
+
+
+/*Vertical Centring*/
+.table{display:table;height:100%;}
+.table-cell{display:table-cell;vertical-align:middle;}
+
+/*Alignments*/
+.center{text-align:center;}
+.left{text-align:left}
+.right{text-align:right}
+
+
+/*Reset Headings*/
+h1, h2, h3, h4, h5, h6{
+	font-size:1em;
+	margin:0;
+	padding:0;
+	font-weight: normal;
+}
+
+/*
+ * A better looking default horizontal rule
+ */
+
+hr {
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #000;
+    margin: 1em 0;
+    padding: 0;
+}
+
