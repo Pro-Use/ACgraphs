@@ -13,7 +13,7 @@ $lg: lg, 1000px;
 $xl: xl, 1200px; 
 
 // Max wrapper width
-$flexboxgrid-max-width: 2500px !default;
+$flexboxgrid-max-width: 25000px !default;
 
 
 
@@ -29,17 +29,17 @@ Variables and Mixins
 
 
 // Set the gutter between columns.
-$flexboxgrid-gutter-width: 12px !default;
+$flexboxgrid-gutter-width: 20px !default;
 
 // Set margin for the container sides.
-$flexboxgrid-outer-margin: 12px !default;
+$flexboxgrid-outer-margin: 20px !default;
 
 // Set gutters
 $gutter-compensation: $flexboxgrid-gutter-width * .5 * -1;
 $half-gutter-width: $flexboxgrid-gutter-width * .5;
 
 // Max wrapper width
-$flexboxgrid-max-width: 1500px !default;
+$flexboxgrid-max-width: 150000px !default;
 
 
 

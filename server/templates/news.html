@@ -2,18 +2,20 @@
 {% block body %}
 <body class="news">
 
-	<ul class="news-list">
+	<ul class="news-list container-fluid">
 		<!-- Loop Start -->
-		<li class="news-list-item">
-			<span class="url">https://bbc.com</span>
-			<span class="headline">Headline</span>
-			<span class="date">04.07.2019</span>
+		<li class="news-list-item row">
+			<span class="url col-xs-2">https://bbc.com</span>
+			<span class="headline col-xs-9">London Bridge: Armed officer describes moment he killed attacker</span>
+			<span class="date col-xs-1">04.07.2019</span>
 		</li>
 		<!-- Loop End -->
 	</ul>
 
 {%for i in range(0, tickers)%}
     <div class="TickerNews">
+    	<h2 class="ticker-title">
+    		
         <div class="ti_wrapper" style="left:{{position}}px">
             <div id="ti_content-{{i}}">
                 {{html[i]}}

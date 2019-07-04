@@ -9,9 +9,6 @@ body{
     display:flex;
     flex-flow: column;
     width:100vw;
-    overflow-x: hidden;
-    transition: background-color 400ms;
-    padding-top:48px;
 }
 
 a, *{
@@ -34,20 +31,37 @@ NEWS TICKER
 ================================================================  
 */
 
-.news-body{
+.news{
     background:black;
     color:white;
     font-family: 'arial', sans-serif;
 }
 
+.news-list{
+    width:100vw;
+    list-style: none;
+    flex: 1;
+    padding-top:20px;
+}
+
+.url{
+
+}
+
+.headline{
+    color: Khaki;
+}
+
+
 .TickerNews{
     width: 100vw;
-    height: 50px;
-    line-height: 50px;
-    position: absolute;
-    bottom: 0px;
+    height: 150px;
+    line-height: 150px;
     overflow: hidden;
+    font-size:4.5em;
+    border-top:1px solid tomato;
 }
+
 .ti_wrapper{
     width: max-content;
     position: relative;
@@ -64,6 +78,7 @@ div[id^="ti_content"]{
 }
 .ti_news{
     float:left;
+    padding-left: .25em;
 }
 .ti_news a{
     display: block;
