@@ -18,11 +18,13 @@ update_feeds = None
 
 def get_news_html(feed):
     news_feed = feedparser.parse(feed)
-    if 'title' in news_feed.entries[1].keys():
+    keys = news_feed.entries[1].keys()
+    if 'title' in keys:
         html_content = ""
         for entry in news_feed.entries:
             html_content += '<div class="ti_news">%s | </div>\n' % entry.title.replace(' ', '&nbsp;')
-        return html_content
+        if 'link' in keys and 'published in keys':
+
     else:
         return None
 
