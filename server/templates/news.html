@@ -16,12 +16,14 @@
 
 {%for i in range(0, tickers)%}
     <div class="TickerNews">
-    	<h2 class="ticker-title">Breaking News</h2>
-        <div class="ti_wrapper" style="left:{{position}}px">
-            <div id="ti_content-{{i}}">
-                {{html[i]}}
-            </div>
-        </div>
+    	<div class="ticker-news-inner">
+	    	<h2 class="ticker-title">Breaking News</h2>
+	        <div class="ti_wrapper" style="left:{{position}}px">
+	            <div id="ti_content-{{i}}">
+	                {{html[i]}}
+	            </div>
+	        </div>
+	    </div>
     </div>
 {%endfor%}
 
