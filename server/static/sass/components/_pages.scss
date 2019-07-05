@@ -62,11 +62,21 @@ NEWS TICKER
     border-top:1px solid tomato;
 }
 
+h2.ticker-title{
+    font-size: 18px;
+    padding: 10px;
+    color:black;
+    background: tomato;
+    margin-top: -100%;
+    text-transform: uppercase;
+}
+
 .ti_wrapper{
     width: max-content;
     position: relative;
     height: 50px;
 }
+
 div[id^="ti_content"]{
     width: auto;
     position: relative;
