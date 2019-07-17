@@ -53,4 +53,10 @@ $(document).ready(function() {
         fear.innerHTML = msg.fear;
     });
 
+    socket.on('update-bar', function(msg) {
+        barchart.updateSeries([{data:[
+            msg.joy, msg.anger, msg.disgust, msg.sadness, msg.fear
+        ]}])
+    });
+
  });

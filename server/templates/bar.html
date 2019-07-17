@@ -1,0 +1,48 @@
+{% extends "layout.html" %}
+{% block body %}
+<body class="news">
+
+<div id="bar"></div>
+
+<script>
+	  var options = {
+            chart: {
+                height: 350,
+                type: 'bar',
+            },
+            plotOptions: {
+                bar: {
+                    horizontal: true,
+                }
+            },
+            dataLabels: {
+              enabled: true,
+              position: 'bottom',
+              textAnchor: 'start',
+              formatter: function(val, opt) {
+                  return opt.w.globals.labels[opt.dataPointIndex] + ":  " + val
+              },
+              offsetX: 0,
+              offsetY: 0,
+            },
+            series: [{
+                data: [{{initial_data[1]}}, {{initial_data[2]}}, {{initial_data[3]}}, {{initial_data[4]}}, {{initial_data[5]}}]
+            }],
+            xaxis: {
+                categories: ['joy', 'anger', 'disgust', 'sadness', 'fear'],
+            },
+            fill: {
+              type: 'gradient'
+            }
+        }
+
+       var barchart = new ApexCharts(
+            document.querySelector("#bar"),
+            options
+        );
+
+        barchart.render();
+</script>
+
+</body>
+{% endblock %}
