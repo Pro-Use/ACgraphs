@@ -1,3 +1,4 @@
 flask
-lask_socketio
+flask_socketio
 feedparse
+eventlet

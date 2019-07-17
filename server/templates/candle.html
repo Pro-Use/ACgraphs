@@ -1,0 +1,46 @@
+{% extends "layout.html" %}
+{% block body %}
+<body class="news">
+
+<div id="candle" style="height: 300px; width: 100%;"></div>
+
+<script>
+	  var candle_options = {
+      chart: {
+        height: 350,
+        type: 'candlestick'
+      },
+      series: [{
+        data: [
+        {%for item in sentiment_list%}
+        {
+            x: new Date({{item[0]}}),
+            y: {{item[1]}}
+          },
+        {%endfor%}
+        ]
+      }],
+      title: {
+        text: 'CandleStick Chart',
+        align: 'left'
+      },
+      xaxis: {
+        type: 'datetime'
+      },
+      yaxis: {
+        tooltip: {
+          enabled: true
+        }
+      }
+    };
+
+    var candle_chart = new ApexCharts(
+      document.querySelector("#candle"),
+      candle_options
+    );
+
+    candle_chart.render();
+</script>
+
+</body>
+{% endblock %}

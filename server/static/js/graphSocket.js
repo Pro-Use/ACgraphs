@@ -35,4 +35,22 @@ $(document).ready(function() {
         newone.style.animationDuration = new_speed + 's';
     });
 
+    socket.on('update-vr', function(msg) {
+        console.log(msg)
+        var tweet = document.getElementById("tweet");
+        var sentiment = document.getElementById("sentiment");
+        var joy = document.getElementById("joy");
+        var anger = document.getElementById("anger");
+        var disgust = document.getElementById("disgust");
+        var sadness = document.getElementById("sadness");
+        var fear = document.getElementById("fear");
+        tweet.innerHTML = msg.tweet;
+        sentiment.innerHTML = msg.sentiment;
+        joy.innerHTML = msg.joy;
+        anger.innerHTML = msg.anger;
+        disgust.innerHTML = msg.disgust;
+        sadness.innerHTML = msg.sadness;
+        fear.innerHTML = msg.fear;
+    });
+
  });
