@@ -59,4 +59,9 @@ $(document).ready(function() {
         ]}])
     });
 
+    socket.on('update-tweets', function(msg) {
+        console.log('Updating Tweets')
+        var parent = document.getElementById('tweets');
+        parent.insertBefore(parent.firstChild, parent.lastChild);
+    });
  });

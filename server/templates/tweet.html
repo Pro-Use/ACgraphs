@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+{% block body %}
+<body class="news">
+	<h3>
+		<span class="tweet col-xs-7">tweet</span>
+		<span class="val col-xs-1">joy</span>
+		<span class="val col-xs-1">anger</span>
+		<span class="val col-xs-1">disgust</span>
+		<span class="val col-xs-1">sadness</span>
+		<span class="val col-xs-1">fear</span>
+	</h3>
+	<ul class="tweet-list container-fluid" id="tweets">
+
+		<!-- Loop Start -->
+		{%for item in initial_data%}
+			<li class="news-list-item row">
+				<span
+						{% if item[1] > 0 %}
+					style="color:green;"
+					    {% elif item[1] < 0 %}
+					style="color:red;"
+					    {% else %}
+					style="color:blue;"
+					    {% endif %}
+						class="tweet col-xs-7">
+					<marquee behavior="scroll">{{item[0]}}</marquee>
+				</span>
+				<span class="val col-xs-1">{{item[2]}}</span>
+				<span class="val col-xs-1">{{item[3]}}</span>
+				<span class="val col-xs-1">{{item[4]}}</span>
+				<span class="val col-xs-1">{{item[5]}}</span>
+				<span class="val col-xs-1">{{item[6]}}</span>
+			</li>
+		{%endfor%}
+		<!-- Loop End -->
+
+	</ul>
+
+</body>
+{% endblock %}
