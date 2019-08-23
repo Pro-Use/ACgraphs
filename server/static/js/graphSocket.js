@@ -64,4 +64,10 @@ $(document).ready(function() {
         var parent = document.getElementById('tweets');
         parent.insertBefore(parent.firstChild, parent.lastChild);
     });
+
+    socket.on('update-heatmap', function(msg) {
+        console.log(msg)
+        console.log('Updating heatmap')
+        addPoint(msg.lat, msg.lng);
+    });
  });
