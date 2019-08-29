@@ -1,0 +1,57 @@
+{% extends "layout.html" %}
+{% block body %}
+<body class="news">
+
+<div id="scatter"></div>
+
+<script>
+    var options = {
+            chart: {
+                height: 350,
+                type: 'scatter',
+                zoom: {
+                    enabled: true,
+                    type: 'xy'
+                },
+            },
+
+            series: [{
+                name: "SAMPLE A",
+                data: {{initial_data}}
+            }],
+            yaxis: {
+                max: 1,
+                min: -1
+            },
+            stroke: {
+                show: false,
+                curve: 'smooth',
+                width: 0,
+            },
+            markers: {
+                strokeColors:["rgba(255,0,0,0)"],
+                size: 10,
+                strokeWidth: 0,
+                },
+                fill: {
+
+                type: "image",
+                opacity: 0.85,
+                image: {
+                  src: ["data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle r='9' cx='9' cy='9' fill='%230000'/%3E%3Crect width='10' height='10' x='4' y='4' fill='blue'/%3E%3C/svg%3E"],
+                  width: 10,
+                  height: 11.5
+                }
+            }
+        };
+
+        var scatterchart = new ApexCharts(
+            document.querySelector("#scatter"),
+            options
+        );
+
+        scatterchart.render();
+</script>
+
+</body>
+{% endblock %}
