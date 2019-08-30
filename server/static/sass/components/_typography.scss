@@ -1,6 +1,23 @@
 @import "../base/variables";
 
 
+@font-face {
+  font-family: 'Myriad';
+  src: url('webfonts/MyriadPro-Regular.woff');
+  src: url('webfonts/MyriadPro-Regular.eot');
+  src: url('webfonts/MyriadPro-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'typ-b';
+  /*src: url('fonts/Typ1451-Bold.eot');*/
+  src: url('fonts/T-Bold.ttf') format('truetype');
+  font-weight: 700;
+}
+
+
+
+
 /*  
 ================================================================
 FONTS
