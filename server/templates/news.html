@@ -6,9 +6,10 @@
 		<!-- Loop Start -->
 		{%for item in news_list%}
 			<li class="news-list-item row">
-				<span class="date col-xs-2">{{item[0]}}</span>
-				<span class="headline col-xs-5">{{item[1]}}</span>
-				<span class="url col-xs-5">{{item[2]}}</span>
+				<span class="emotion col-xs-2">{{item[0]}}</span>
+				<span class="score col-xs-2">{{item[1]}}</span>
+				<span class="headline col-xs-5">{{item[2]}}</span>
+				<span class="date col-xs-2">{{item[3]}}</span>
 			</li>
 		{%endfor%}
 		<!-- Loop End -->

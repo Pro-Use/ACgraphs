@@ -59,6 +59,15 @@ $(document).ready(function() {
         ]}])
     });
 
+    socket.on('update-scatter', function(msg) {
+        console.log(msg.data)
+        var new_data = [];
+        scatterchart.updateSeries([{name: "SAMPLE A",
+        data:
+            msg.data
+        }])
+    });
+
     socket.on('update-tweets', function(msg) {
         console.log('Updating Tweets')
         var parent = document.getElementById('tweets');

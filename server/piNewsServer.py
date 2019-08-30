@@ -21,14 +21,15 @@ def get_news_html():
     html_content = ""
     for article in articles:
         html_content += '<div class="ti_news"> %s </div>\n' % article[1].replace(' ', '&nbsp;')
-    #print(html_content)
+    # print(html_content)
     return html_content
 
 
 def get_list_html():
     list_html = []
     for article in articles:
-        list_html.append([Markup(article[0]),
+        list_html.append([Markup('Anger'),
+                          Markup('0.500'),
                           Markup(article[1]),
                           Markup(article[2])
                           ])
@@ -51,7 +52,7 @@ def update_thread(tickers):
             ticker = i
             new_html = get_news_html()
             if new_html is not None:
-                ticker_html[ticker] = new_html
+                ticker_html = new_html
                 socketio.emit('update', {'ticker':ticker, 'html': new_html}, namespace='/graphSock')
         news_list = get_list_html()
         socketio.sleep(1800)
