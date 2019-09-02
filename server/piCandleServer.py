@@ -1,7 +1,7 @@
 from flask import Flask, render_template, Markup, flash
 from flask_socketio import SocketIO
 from time import mktime
-from datetime import datetime
+from datetime import datetime, timedelta
 import sqlite3
 
 app = Flask(__name__)
@@ -29,9 +29,11 @@ if __name__ == '__main__':
                         GROUP BY date,
                              hour''')
     new_cursor = con.cursor()
+    now = datetime.today()
     for row in cursor:
-        d = datetime.strptime("%s %s" % (row[0], row[1]), '%d/%m/%Y %H')
-        timestamp = mktime(d.timetuple())
+        # d = datetime.strptime("%s %s" % (row[0], row[1]), '%d/%m/%Y %H')
+        now -= timedelta(hours=1)
+        timestamp = mktime(now.timetuple())
         new_cursor.execute('''SELECT fear
                             FROM twitter
                             WHERE date=? AND hour=?''', (row[0], row[1]))

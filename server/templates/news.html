@@ -2,27 +2,33 @@
 {% block body %}
 <body class="news">
 
-	<ul class="news-list container-fluid">
+	<ul id="left-news-feed" class="news-list">
 		<!-- Loop Start -->
 		{%for item in news_list%}
-			<li class="news-list-item row">
-				<span class="emotion col-xs-2">{{item[0]}}</span>
-				<span class="score col-xs-2">{{item[1]}}</span>
-				<span class="headline col-xs-5">{{item[2]}}</span>
-				<span class="date col-xs-2">{{item[3]}}</span>
+			<li class="news-list-item row-max {{item[4]}}">
+				<span class="align-centre emotion col-xs-1">{{item[0]}}</span>
+				<span class="align-centre span col-xs-1">{{item[1]}}</span>
+				<span class=" news-headline col-xs-8">{{item[2]}}</span>
+				<span class="align-centre time col-xs-2">{{item[3]}}</span>
 			</li>
 		{%endfor%}
 		<!-- Loop End -->
 	</ul>
 
 {%for i in range(0, tickers)%}
-    <div class="TickerNews">
-    	<div class="ticker-news-inner">
-	    	<h2 class="ticker-title">Breaking News</h2>
-	        <div class="ti_wrapper" style="left:{{position}}px">
-	            <div id="ti_content-{{i}}">
-	                {{html}}
-	            </div>
+	<div class="news-ticker-wrapper"{% if position != 0 %} style="background:#000"{% endif %}>
+		<div class="news-ticker-wrapper-inner">
+			{% if position == 0 %}
+			<div class="news-ticker-title">
+				BREAKING NEWS
+			</div>
+			{% endif %}
+			<div class="news-ticker-container">
+	        	<div class="ti_wrapper" style="left:{{position}}px">
+	            	<div id="ti_content-{{i}}">
+	                	{{html}}
+	            	</div>
+				</div>
 	        </div>
 	    </div>
     </div>

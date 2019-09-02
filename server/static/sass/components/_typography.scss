@@ -15,7 +15,14 @@
   font-weight: 700;
 }
 
+@font-face {
+    font-family: 'doubletproportionalregular';
+    src: url('webfonts/doubletproportional-webfont.woff2') format('woff2'),
+         url('webfonts/doubletproportional-webfont.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
 
+}
 
 
 /*  

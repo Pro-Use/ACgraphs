@@ -7,30 +7,54 @@
 <script>
 	  var candle_options = {
       chart: {
-        height: 350,
+        height: 1080,
+        width: 1920,
         type: 'candlestick'
+      },
+      plotOptions: {
+          candlestick: {
+            colors: {
+              upward: '#0000ff',
+              downward: '#0000ff'
+            }
+          }
+      },
+      grid: {
+        show: false,
+      },
+      tooltip: {
+          enabled: false,
       },
       series: [{
         data: [
         {%for item in sentiment_list%}
         {
-            x: new Date({{item[0]}}),
+            x: {{item[0]}},
             y: {{item[1]}}
           },
         {%endfor%}
         ]
       }],
-      title: {
-        text: 'CandleStick Chart',
-        align: 'left'
+      stroke: {
+        width: 1
       },
       xaxis: {
-        type: 'datetime'
+        labels: {
+            show: false,
+        },
+        title: {
+            text: 'BPA twitter sentiment: opening/closing, high/low',
+            style: {
+                color: '#0000ff',
+                fontSize: '21px',
+                fontFamily: 'Helvetica, Arial, sans-serif',
+            }
+        }
       },
       yaxis: {
-        tooltip: {
-          enabled: true
-        }
+        labels: {
+            show: false,
+        },
       }
     };
 

@@ -13,6 +13,9 @@
             plotOptions: {
                 bar: {
                     horizontal: true,
+                    dataLabels: {
+                        position: 'bottom',
+                    }
                 }
             },
             dataLabels: {
@@ -20,7 +23,7 @@
               position: 'bottom',
               textAnchor: 'start',
               formatter: function(val, opt) {
-                  return opt.w.globals.labels[opt.dataPointIndex] + ":  " + val
+                  return opt.w.globals.labels[opt.dataPointIndex]
               },
               offsetX: 0,
               offsetY: 0,
@@ -29,10 +32,39 @@
                 data: [{{initial_data[1]}}, {{initial_data[2]}}, {{initial_data[3]}}, {{initial_data[4]}}, {{initial_data[5]}}]
             }],
             xaxis: {
+                type: 'categories',
                 categories: ['joy', 'anger', 'disgust', 'sadness', 'fear'],
+                labels: {
+                    show: false,
+                },
+                axisBorder: {
+                    show: true,
+                }
+            },
+            grid: {
+                show: false,
             },
             fill: {
-              type: 'gradient'
+              type: 'gradient',
+              gradient: {
+                colorStops: [
+                                {
+                                  offset: 0,
+                                  color: '#000',
+                                  opacity: 1
+                                },
+                                {
+                                  offset: 40,
+                                  color: '#808080',
+                                  opacity: 0.6
+                                },
+                                {
+                                  offset: 100,
+                                  color: '#FFF',
+                                  opacity: 0
+                                },
+                            ]
+              }
             }
         }
 
