@@ -11,15 +11,15 @@
 			while($x <= 100) {
 		?>
 			<li class="news-list-item row-max red">
-				<span class="align-centre emotion col-xs-1">Anger</span>
-				<span class="align-centre span col-xs-1">0.50721</span>
-				<span class=" news-headline col-xs-8">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam semper nisi non scelerisque ultrices.</span>
+				<span class="align-centre emotion col-xs-2">Anger</span>
+				<span class="align-centre span col-xs-2">0.50721</span>
+				<span class=" news-headline col-xs-6">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam semper nisi non scelerisque ultrices.</span>
 				<span class="align-centre time col-xs-2">16:35 GMT</span>
 			</li>
 			<li class="news-list-item row-max green">
-				<span class="align-centre emotion col-xs-1">Anger</span>
-				<span class="align-centre span col-xs-1">0.50721</span>
-				<span class=" news-headline col-xs-8">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam semper nisi non scelerisque ultrices.</span>
+				<span class="align-centre emotion col-xs-2">Anger</span>
+				<span class="align-centre span col-xs-2">0.50721</span>
+				<span class=" news-headline col-xs-6">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam semper nisi non scelerisque ultrices.</span>
 				<span class="align-centre time col-xs-2">16:35 GMT</span>
 			</li>
 			<?php $x++;} ?>
