@@ -40,7 +40,7 @@ def get_list_html(tweets):
         list_html.append([Markup(EMOTIONS[max_val]),
                           Markup(value),
                           Markup(tweet[0]),
-                          Markup("%s:%s GMT" % (tweet[6], tweet[7])),
+                          Markup("%s:%s" % (tweet[6], tweet[7])),
                           Markup(colour)
                           ])
     #print(list_html)

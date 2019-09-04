@@ -44,9 +44,11 @@ NEWS TICKER
     font-size: 1vw;
     width:50vw;
     list-style: none;
-    height:85vh;
+    height:86vh;
     overflow: hidden;
-    font-family: 'Myriad', sans-serif;
+    font-family: doublet;
+    font-size: 1.3vw;
+    line-height: 24px;
 }
 
 #left-news-feed{
@@ -94,7 +96,7 @@ NEWS TICKER
 /* News Ticker */
 
 .news-ticker-wrapper{
-    height:15vh;
+    height:14vh;
     border-top:1px solid yellow;
     border-bottom:1px solid yellow;
     width:100vw;
@@ -248,7 +250,8 @@ LIST PAGE
     font-size: 1.75vw;
     list-style: none;
     overflow: hidden;
-    font-family: 'Myriad', sans-serif;
+    font-family: doublet;
+    line-height: 45px;
 }
 
 .list-item{
@@ -268,7 +271,7 @@ LIST PAGE
     -ms-flex-negative: 0;
     flex-shrink: 0;
     padding-right: 7.5px;
-    padding-left: 7.5px;
+    padding-left: 4px;
     -webkit-flex-basis: 3%;
     -moz-flex-basis: 3%;
     -ms-flex-preferred-size: 3%;
@@ -290,11 +293,12 @@ LIST PAGE
     flex-shrink: 0;
     padding-right: 7.5px;
     padding-left: 7.5px;
-    -webkit-flex-basis: 12%;
-    -moz-flex-basis: 12%;
-    -ms-flex-preferred-size: 12%;
-    flex-basis: 12%;
-    width: 12%;
+    -webkit-flex-basis: 11.5%;
+    -moz-flex-basis: 11.5%;
+    -ms-flex-preferred-size: 11.5%;
+    flex-basis: 11.5%;
+    width: 11.5%;
+    margin-right: 12px;
     text-align: center;
     text-transform: uppercase;
     word-wrap: none;
@@ -316,11 +320,11 @@ LIST PAGE
     flex-shrink: 0;
     padding-right: 7.5px;
     padding-left: 7.5px;
-    -webkit-flex-basis: 10%;
-    -moz-flex-basis: 10%;
-    -ms-flex-preferred-size: 10%;
-    flex-basis: 10%;
-    width: 10%;
+    -webkit-flex-basis: 8.5%;
+    -moz-flex-basis: 8.5%;
+    -ms-flex-preferred-size: 8.5%;
+    flex-basis: 8.5%;
+    width: 8.5%;
     text-align: center;
     text-transform: uppercase;
     word-wrap: none;
@@ -341,11 +345,11 @@ LIST PAGE
     flex-shrink: 0;
     padding-right: 7.5px;
     padding-left: 7.5px;
-    -webkit-flex-basis: 65%;
-    -moz-flex-basis: 65%;
-    -ms-flex-preferred-size: 65%;
-    flex-basis: 65%;
-    width: 65%;
+    -webkit-flex-basis: 67%;
+    -moz-flex-basis: 67%;
+    -ms-flex-preferred-size: 67%;
+    flex-basis: 67%;
+    width: 67%;
     text-transform: uppercase;
     word-wrap: none;
     white-space: nowrap;

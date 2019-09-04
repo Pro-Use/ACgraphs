@@ -9,20 +9,20 @@
 }
 
 @font-face {
+  font-family: 'doublet';
+  src: url('webfonts/doubletproportional-webfont.woff');
+  src: url('webfonts/doubletproportional-webfont.eot');
+  src: url('webfonts/doubletproportional-webfont.ttf') format('truetype');
+}
+
+@font-face {
   font-family: 'typ-b';
   /*src: url('fonts/Typ1451-Bold.eot');*/
   src: url('fonts/T-Bold.ttf') format('truetype');
   font-weight: 700;
 }
 
-@font-face {
-    font-family: 'doubletproportionalregular';
-    src: url('webfonts/doubletproportional-webfont.woff2') format('woff2'),
-         url('webfonts/doubletproportional-webfont.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
 
-}
 
 
 /*  

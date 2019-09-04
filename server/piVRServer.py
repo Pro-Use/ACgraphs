@@ -25,7 +25,7 @@ def update_thread():
                              'disgust': data[4],
                              'sadness': data[5],
                              'fear': data[6]}, namespace='/graphSock')
-            print("sending %s, %s, %s, %s, %s, %s, %s" % data[0:7])
+            print("sending data")
             socketio.sleep(DATA_WAIT)
 
 
