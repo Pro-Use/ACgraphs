@@ -121,7 +121,7 @@ def connect():
 def scatter():
     scatter_file = 'scatter.html'
     return render_template(scatter_file, async_mode=socketio.async_mode, initial_data=initial_data,
-                           max=first_max, min=first_min)
+                           max=first_max, min=first_min, price_data=price_data)
 
 if __name__ == '__main__':
     print('getting data...')
@@ -132,8 +132,14 @@ if __name__ == '__main__':
                         FROM price_model_data''')
 
     all_data = cursor.fetchall()
-    for data in all_data:
+    cursor.execute('''SELECT * FROM prices ORDER BY id DESC LIMIT 1; ''')
+    latest_price = cursor.fetchall()[0]
+    price_data = []
+    for i in range(len(all_data)):
+        data = all_data[i]
         pricing_models[data[0]] = {"mod": data[1],"hdd": data[2],"ftse": data[3],"bpa": data[4]}
+        price_data.append([data[0], latest_price[i + 2]])
+    print(price_data)
     initial_data = None
     for company in pricing_models.keys():
         initial_data, first_max, first_min = gen_data(datetime.today(), company)

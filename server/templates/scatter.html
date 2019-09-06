@@ -1,9 +1,18 @@
 {% extends "layout.html" %}
 {% block body %}
-<body class="news">
-
-<div id="scatter"></div>
-
+<body class="stats-page">
+<div class="scatter-container">
+    <div id="scatter"></div>
+    <div id="prices">
+        <ul>
+            {% for data in price_data %}
+            <li>
+                <span class="company">{{data[0]}}</span><span class="value">{{data[1]}}</span>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
 <script>
     var options = {
             chart: {
