@@ -7,26 +7,62 @@
 <script>
     var options = {
             chart: {
-                height: 350,
+                height: 1050,
+                width: 1600,
                 type: 'scatter',
-                zoom: {
-                    enabled: true,
-                    type: 'xy'
+                toolbar: {
+                  show: false
                 },
             },
-
             series: [{
                 name: "SAMPLE A",
                 data: {{initial_data}}
             }],
             yaxis: {
                 max: 1,
-                min: -1
+                min: -1,
+                labels: {
+                    show: false,
+                },
+                axisBorder: {
+                    show: true,
+                    color: 'blue',
+                },
+                axisTicks: {
+                      show: true,
+                      borderType: 'solid',
+                      color: 'blue',
+                      width: 20,
+                },
+            },
+            tickAmount: 6,
+            xaxis: {
+                tickAmount: 10,
+                tickPlacement: 'on',
+                labels: {
+                    show: false,
+                },
+                axisBorder: {
+                    show: true,
+                    color: 'blue',
+                },
+                axisTicks: {
+                      show: true,
+                      borderType: 'solid',
+                      color: 'blue',
+                      height: 20,
+                },
+            },
+            grid: {
+                show: false,
             },
             stroke: {
                 show: false,
                 curve: 'smooth',
                 width: 0,
+            },
+            tooltip: {
+                enabled: false,
             },
             markers: {
                 strokeColors:["rgba(255,0,0,0)"],

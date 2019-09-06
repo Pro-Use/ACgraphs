@@ -31,7 +31,6 @@ if __name__ == '__main__':
     new_cursor = con.cursor()
     now = datetime.today()
     for row in cursor:
-        # d = datetime.strptime("%s %s" % (row[0], row[1]), '%d/%m/%Y %H')
         now -= timedelta(hours=1)
         timestamp = mktime(now.timetuple())
         new_cursor.execute('''SELECT fear

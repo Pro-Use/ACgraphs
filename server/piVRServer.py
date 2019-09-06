@@ -1,11 +1,11 @@
 from flask import Flask, render_template, Markup, flash
 from flask_socketio import SocketIO
-from time import mktime
-from datetime import datetime
+from time import time
+from random import randrange
 import sqlite3
 
 ## Number of seconds between sending new sentiment/emotional data to socket:
-DATA_WAIT = 10
+DATA_WAIT = 1
 ###
 
 app = Flask(__name__)
@@ -15,9 +15,17 @@ update_vals = None
 
 
 def update_thread():
+    data_pos = 0
+    next_tweet = time() + randrange(20, 120)
     while True:
-        for data in all_data:
-            socketio.emit('update-vr',
+        news_sentiment = float(randrange(0, 9999) / 10000)
+        socketio.emit('update-vr-news',
+                      {'news': 'This is a test headline...',
+                       'sentiment': news_sentiment},
+                      namespace='/graphSock')
+        if time() > next_tweet:
+            data = all_data[data_pos]
+            socketio.emit('update-vr-tweet',
                           {'tweet': data[0],
                              'sentiment': data[1],
                              'joy': data[2],
@@ -25,8 +33,10 @@ def update_thread():
                              'disgust': data[4],
                              'sadness': data[5],
                              'fear': data[6]}, namespace='/graphSock')
-            print("sending data")
-            socketio.sleep(DATA_WAIT)
+            print("sending tweet data")
+            data_pos += 1
+            next_tweet = time() + randrange(20, 120)
+        socketio.sleep(DATA_WAIT)
 
 
 @app.route('/vr')
@@ -42,7 +52,7 @@ def connect():
     if update_vals is None:
         update_vals = socketio.start_background_task(target=update_thread)
     data = all_data[0]
-    socketio.emit('update-vr',
+    socketio.emit('update-vr-tweet',
                   {'tweet': data[0],
                    'sentiment': data[1],
                    'joy': data[2],
@@ -50,6 +60,11 @@ def connect():
                    'disgust': data[4],
                    'sadness': data[5],
                    'fear': data[6]}, namespace='/graphSock')
+    news_sentiment = float(randrange(0, 9999) / 10000)
+    socketio.emit('update-vr-news',
+                  {'news': 'This is a test headline...%s' % time(),
+                   'sentiment': news_sentiment},
+                    namespace='/graphSock')
 
 
 if __name__ == '__main__':

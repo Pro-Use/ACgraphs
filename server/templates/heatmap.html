@@ -17,6 +17,7 @@
           scaleControl: false,
           disableDefaultUI: true,
           mapTypeControl: false,
+          mapTypeId: 'hybrid',
           center: {lat: 51.5074, lng: 0.1278}
         });
 
@@ -62,14 +63,14 @@
       function getPoints() {
         pointArray = new google.maps.MVCArray( [
         {%for item in initial_data%}
-          new google.maps.LatLng({{item[1]}}, {{item[2]}}),
+          {location: new google.maps.LatLng({{item[1]}}, {{item[2]}}), weight: 100000},
         {%endfor%}
         ]);
         return pointArray;
       }
 
       function addPoint(lat, long) {
-        pointArray.push(new google.maps.LatLng(lat, long));
+        pointArray.push({location: new google.maps.LatLng(lat, long), weight: 100000});
       }
     </script>
     <script async defer

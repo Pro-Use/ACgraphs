@@ -75,11 +75,16 @@ NEWS TICKER
 
 .emotion{
     text-transform: uppercase;
+    margin-right: 28px;
+}
+
+.score {
+    margin-right: 44px;
 }
 
 .news-headline{
-    word-wrap: none;
-    white-space: nowrap;
+    word-break: break-all;
+    height: 1em;
     overflow: hidden;
 }
 
