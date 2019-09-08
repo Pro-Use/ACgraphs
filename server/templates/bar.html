@@ -1,8 +1,8 @@
 {% extends "layout.html" %}
 {% block body %}
-<body class="stats-page">
+<body class="stats-page" style="overflow:hidden;background-image:url({{url_for('static', filename='images/Ami-bar-ref.png')}})">
 
-<div id="bar"></div>
+<div id="bar" style="margin-left:30px;"></div>
 
 	<div class="stats-container">
 
@@ -10,23 +10,23 @@
 			<br>
 		</div>
 
-		<div class="line line2">
+		<div class="line line6">
 			<span class="align-centre w-20">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Frequency</span>
 		</div>
 
-		<div class="line line3">
+		<div class="line line11">
 				<span class="stat-title">tweets / senti analysis</span> <span class="stat-unit align-right">ns</span> <span class="stat align-right">10032.0002341</span>
 		</div>
 
-		<div class="line line4">
+		<div class="line line16">
 				<span class="stat-title">news / senti analysis</span> <span class="stat-unit align-right">ns</span> <span class="stat align-right">10032.0002341</span>
 		</div>
 
-		<div class="line line5">
+		<div class="line line21">
 				<span class="stat-title">cognitive processing</span> <span class="stat-unit align-right">s</span> <span class="stat align-right">10032.0002341</span>
 		</div>
 
-		<div class="line line6">
+		<div class="line line">
 				<span class="stat-title">non-cognitive processing</span> <span class="stat-unit align-right">ms</span> <span class="stat align-right">10032.0002341</span>
 		</div>
 
@@ -64,7 +64,7 @@
 <script>
 	  var options = {
             chart: {
-                height: 470,
+                height: 436,
                 type: 'bar',
             },
             plotOptions: {

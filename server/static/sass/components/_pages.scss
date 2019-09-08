@@ -282,7 +282,7 @@ LIST PAGE
     -ms-flex-preferred-size: 3%;
     flex-basis: 3%;
     width: 3%;
-    font-size: 1.5em
+    font-size: 1em
 }
 
 .source{
@@ -350,11 +350,11 @@ LIST PAGE
     flex-shrink: 0;
     padding-right: 7.5px;
     padding-left: 7.5px;
-    -webkit-flex-basis: 67%;
-    -moz-flex-basis: 67%;
-    -ms-flex-preferred-size: 67%;
-    flex-basis: 67%;
-    width: 67%;
+    -webkit-flex-basis: 65%;
+    -moz-flex-basis: 65%;
+    -ms-flex-preferred-size: 65%;
+    flex-basis: 65%;
+    width: 65%;
     text-transform: uppercase;
     word-wrap: none;
     white-space: nowrap;
@@ -400,15 +400,15 @@ STATS CONTAINER
 }
 
 .stats-container{
-    width:65vw;
+    width: 61.5vw;
     position: fixed;
-    bottom:0;
-    right:0;
-    padding:30px;
+    bottom: 0;
+    right: 0;
+    padding: 0px 80px 55px 0px;
 }
 
 .line{
-    padding:9px 0 9px 1.5%;
+    padding:13px 0 3px 1.5%;
     min-height:1em;
     border-top: 1px solid rgb(0,0,255);
     float:right;
@@ -436,7 +436,7 @@ STATS CONTAINER
 }
 
 .line.tall{
-    padding-top: 1.5em;
+    padding-top: 2em;
 }
 
 @for $i from 1 through 13 {
@@ -453,14 +453,16 @@ STATS CONTAINER
 }
 
 #prices {
-    height: 970px;
+    height: 980px;
+    width:450px;
     overflow: hidden;
-    margin: 10px;
+    margin: 35px 10px 0px 50px;
+    font-size: 1.2em;
+    line-height: 2em;
 }
 
 .company {
     overflow: hidden;
-    height: 1em;
 }
 
 .scatter-container {

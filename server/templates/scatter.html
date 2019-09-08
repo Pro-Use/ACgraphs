@@ -1,13 +1,13 @@
 {% extends "layout.html" %}
 {% block body %}
-<body class="stats-page">
+<body class="stats-page" style="overflow:hidden;background-image:url({{url_for('static', filename='images/Ami-scatter-ref.png')}})">
 <div class="scatter-container">
     <div id="scatter"></div>
     <div id="prices">
         <ul>
             {% for data in price_data %}
             <li>
-                <span class="company w-14">{{data[0]}}</span><span class="value w-5">{{data[1]}}</span>
+                <span class="company w-15">{{data[0]}}</span><span class="value w-5">{{data[1]}}</span>
             </li>
             {% endfor %}
         </ul>
@@ -16,8 +16,8 @@
 <script>
     var options = {
             chart: {
-                height: 1050,
-                width: 1600,
+                height: 1090,
+                width: 1450,
                 type: 'scatter',
                 toolbar: {
                   show: false
@@ -83,9 +83,9 @@
                 type: "image",
                 opacity: 0.85,
                 image: {
-                  src: ["data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle r='9' cx='9' cy='9' fill='%230000'/%3E%3Crect width='10' height='10' x='4' y='4' fill='blue'/%3E%3C/svg%3E"],
-                  width: 10,
-                  height: 11.5
+                  src: ["data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle r='9' cx='9' cy='9' fill='%230000'/%3E%3Crect width='16' height='16' x='6' y='6' fill='blue'/%3E%3C/svg%3E"],
+                  width: 16,
+                  height: 18
                 }
             }
         };
