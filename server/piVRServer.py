@@ -1,7 +1,7 @@
 from flask import Flask, render_template, Markup, flash
 from flask_socketio import SocketIO
 from time import time
-from random import randrange
+from random import randrange, randint
 import sqlite3
 
 ## Number of seconds between sending new sentiment/emotional data to socket:
@@ -18,7 +18,8 @@ def update_thread():
     data_pos = 0
     next_tweet = time() + randrange(20, 120)
     while True:
-        news_sentiment = float(randrange(0, 9999) / 10000)
+        # news_sentiment = float(randrange(0, 9999) / 10000)
+        news_sentiment = (randint * 2) -1
         socketio.emit('update-vr-news',
                       {'news': 'This is a test headline...%s' % time(),
                        'sentiment': news_sentiment},
