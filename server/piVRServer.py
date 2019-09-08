@@ -20,7 +20,7 @@ def update_thread():
     while True:
         news_sentiment = float(randrange(0, 9999) / 10000)
         socketio.emit('update-vr-news',
-                      {'news': 'This is a test headline...',
+                      {'news': 'This is a test headline...%s' % time(),
                        'sentiment': news_sentiment},
                       namespace='/graphSock')
         if time() > next_tweet:
