@@ -76,10 +76,29 @@ $(document).ready(function() {
         }])
     });
 
-    socket.on('update-tweets', function(msg) {
-        console.log('Updating Tweets')
+    socket.on('update-candle', function(msg) {
+        candlechart.updateSeries([{data:[
+            msg.data
+        ]}])
+    });
+
+    socket.on('update-news', function(msg) {
+        console.log('Updating News')
         var parent = document.getElementById('tweets');
         parent.insertBefore(parent.firstChild, parent.lastChild);
+    });
+
+   socket.on('update-news-list', function(msg) {
+        console.log('Updating News List')
+        $('.list-container').empty();
+        for (i = 0; i < msg.html_arr.length; i++) {
+            $('.list-container').append(msg.html_arr[i]);
+        }
+    });
+
+    socket.on('update-tweets', function(msg) {
+        console.log('Updating tweets')
+        $("#left-news-feed").append(msg.html);
     });
 
     socket.on('update-heatmap', function(msg) {

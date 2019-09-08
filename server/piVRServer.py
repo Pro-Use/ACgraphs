@@ -16,10 +16,16 @@ update_vals = None
 
 def update_thread():
     data_pos = 0
+    news_sentiment = 0
     next_tweet = time() + randrange(20, 120)
     while True:
         # news_sentiment = float(randrange(0, 9999) / 10000)
-        news_sentiment = (randint * 2) -1
+        if 0 <= news_sentiment <= 1:
+            news_sentiment += 0.1
+        else:
+            news_sentiment = 0
+        # news_sentiment = float(randint(0, 9999) / 10000)
+        print("new sentiment = %s" % news_sentiment)
         socketio.emit('update-vr-news',
                       {'news': 'This is a test headline...%s' % time(),
                        'sentiment': news_sentiment},
@@ -61,7 +67,8 @@ def connect():
                    'disgust': data[4],
                    'sadness': data[5],
                    'fear': data[6]}, namespace='/graphSock')
-    news_sentiment = float(randrange(0, 9999) / 10000)
+    news_sentiment = float(randint(0, 9999) / 10000)
+    print("new sentiment = %s" % news_sentiment)
     socketio.emit('update-vr-news',
                   {'news': 'This is a test headline...%s' % time(),
                    'sentiment': news_sentiment},

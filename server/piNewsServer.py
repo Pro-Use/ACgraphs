@@ -19,7 +19,7 @@ ticker_html = ""
 news_list = []
 EMOTIONS =['JOY','ANGER','DISGUST','SADNESS','FEAR']
 
-def get_news_html():
+def get_news_html(articles):
     html_content = ""
     for article in articles:
         html_content += '<div class="news-ticker-item ti_news"><span class="ticker-up-icon"> </span><span class="news-ticker-item-text"> %s </span></div>\n' % article[1].replace(' ', '&nbsp;')
@@ -60,7 +60,7 @@ def update_thread(tickers):
             updated = time()
         for i in range(0, tickers):
             ticker = i
-            new_html = get_news_html()
+            new_html = get_news_html(articles)
             if new_html is not None:
                 ticker_html = new_html
                 socketio.emit('update', {'ticker':ticker, 'html': new_html}, namespace='/graphSock')
@@ -110,7 +110,7 @@ if __name__ == '__main__':
                         FROM twitter''')
 
     all_data = cursor.fetchall()
-    ticker_html = get_news_html()
+    ticker_html = get_news_html(articles)
     news_list = get_list_html(all_data)
     print('starting app')
     socketio.run(app, host='0.0.0.0', debug=True, use_reloader=True)

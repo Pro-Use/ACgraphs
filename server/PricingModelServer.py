@@ -39,8 +39,8 @@ def calc_price(company,ftse,bpa,hdd=0):
     b = bpa * pricing_models[company]['bpa']
     return pricing_models[company]['mod'] + f + h + b
 
-def gen_data(now, company):
-    global ftse_data, ftse_update
+def gen_data(now, company, ftse_data, ftse_update):
+    # global ftse_data, ftse_update
     if ftse_data is None or time() - ftse_update > 3600:
         now = datetime.today()
         if now.weekday() > 5:
@@ -65,7 +65,7 @@ def gen_data(now, company):
         new_val = calc_price(company, ftse.Settle, sent)
         vals.append(new_val)
         company_data.append([new_val, sent])
-    return company_data, max(vals), min(vals)
+    return company_data, max(vals), min(vals), ftse_update
 
 def insert_tweet_data(tweet_obj):
     d, m, y = tweet_obj[0].split('/')
@@ -118,6 +118,7 @@ def update_db():
     ftse_update = time()
     for tweet in tweet_data:
         insert_tweet_data(tweet)
+    return
 
 @socketio.on('connect', namespace='/graphSock')
 def connect():
@@ -150,7 +151,7 @@ if __name__ == '__main__':
     print(price_data)
     initial_data = None
     for company in pricing_models.keys():
-        initial_data, first_max, first_min = gen_data(datetime.today(), company)
+        initial_data, first_max, first_min, ftse_update = gen_data(datetime.today(), company, ftse_data, ftse_update)
         break
     print(initial_data, first_max, first_min)
     print('starting app')
