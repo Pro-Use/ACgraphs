@@ -43,7 +43,11 @@ def gen_data(now, company):
     global ftse_data, ftse_update
     if ftse_data is None or time() - ftse_update > 3600:
         now = datetime.today()
-        start_date = "%s-%s-%s" % (now.year, now.month, now.day - 1)
+        if now.weekday() > 5:
+            days_prev = now.weekday() - 5 + 1
+        else:
+            days_prev = 1
+        start_date = "%s-%s-%s" % (now.year, now.month, now.day - days_prev)
         end_date = "%s-%s-%s" % (now.year, now.month, now.day)
         ftse_data = quandl.get("CHRIS/LIFFE_Z1", authtoken="NP-HERKjNAxszM1r66X6",
                                start_date=start_date, end_date=end_date)
@@ -51,7 +55,11 @@ def gen_data(now, company):
         # print(ftse_data)
     company_data = []
     vals = []
-    ftse = ftse_data.loc["%s-%s-%s" % (now.year, now.month, now.day -1)]
+    if now.weekday() > 5:
+        days_prev = now.weekday() - 5 + 1
+    else:
+        days_prev = 1
+    ftse = ftse_data.loc["%s-%s-%s" % (now.year, now.month, now.day - days_prev)]
     for s in range(0, 10):
         sent = s / 10
         new_val = calc_price(company, ftse.Settle, sent)
