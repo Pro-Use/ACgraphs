@@ -64,7 +64,7 @@
 <script>
 	  var options = {
             chart: {
-                height: 350,
+                height: 470,
                 type: 'bar',
             },
             plotOptions: {
@@ -79,6 +79,9 @@
               enabled: true,
               position: 'bottom',
               textAnchor: 'start',
+              style: {
+            	fontSize: '1.2em',
+              },
               formatter: function(val, opt) {
                   return opt.w.globals.labels[opt.dataPointIndex]
               },

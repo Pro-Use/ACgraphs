@@ -138,7 +138,7 @@ if __name__ == '__main__':
     for i in range(len(all_data)):
         data = all_data[i]
         pricing_models[data[0]] = {"mod": data[1],"hdd": data[2],"ftse": data[3],"bpa": data[4]}
-        price_data.append([data[0], latest_price[i + 2]])
+        price_data.append([data[0], "£%.2f" % float(latest_price[i + 2])])
     print(price_data)
     initial_data = None
     for company in pricing_models.keys():
