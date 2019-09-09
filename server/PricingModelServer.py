@@ -67,10 +67,10 @@ def gen_data(now, company, ftse_data, ftse_update):
         company_data.append([new_val, sent])
     return company_data, max(vals), min(vals), ftse_update
 
-def insert_tweet_data(tweet_obj):
+def insert_tweet_data(tweet_obj, ftse_data):
     d, m, y = tweet_obj[0].split('/')
-    global ftse_data, ftse_update
-    if ftse_data is None or time() - ftse_update > 3600:
+    # global ftse_data, ftse_update
+    if ftse_data is None:
         start_date = "%s-%s-%s" % (y, m, int(d) - 1)
         end_date = "%s-%s-%s" % (y, m, d)
         ftse_data = quandl.get("CHRIS/LIFFE_Z1", authtoken="NP-HERKjNAxszM1r66X6",
@@ -83,12 +83,6 @@ def insert_tweet_data(tweet_obj):
     u_con.commit()
     ftse = ftse_data.loc["%s-%s-%s" % (y, m, d)]
     for company in pricing_models:
-        print('''UPDATE prices SET %s = %s WHERE id = %s''' %
-              (company.replace(' ', ''),
-               calc_price(company, ftse.Settle, tweet_obj[1]),
-               tweet_obj[2]
-               ))
-
         u_con = sqlite3.connect('db/graphs_db.db')
         u_cursor = u_con.cursor()
         u_cursor.execute(

@@ -1,6 +1,12 @@
 {% extends "layout.html" %}
 {% block body %}
-<body class="news">
+<body class="news"
+	  {% if position == 0 %}
+	  data-screen="7"
+	  {% else %}
+	  data-screen="8"
+	  {%endif%}
+	>
 
 	<ul id="left-news-feed" class="news-list">
 		<!-- Loop Start -->
@@ -25,7 +31,7 @@
 			{% endif %}
 			<div class="news-ticker-container">
 	        	<div class="ti_wrapper" style="left:{{position}}px">
-	            	<div id="ti_content-{{i}}">
+	            	<div id="ti_content">
 	                	{{html}}
 	            	</div>
 				</div>
@@ -35,4 +41,5 @@
 {%endfor%}
 
 </body>
+<script src="{{url_for('static', filename='js/newsSocket.js')}}"></script>
 {% endblock %}

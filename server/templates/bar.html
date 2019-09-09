@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
 {% block body %}
-<body class="stats-page" style="overflow:hidden;background-image:url({{url_for('static', filename='images/Ami-bar-ref.png')}})">
+<body class="stats-page" style="overflow:hidden;">
 
 <div id="bar" style="margin-left:30px;"></div>
 
@@ -135,6 +135,6 @@
 
         barchart.render();
 </script>
-
 </body>
+<script src="{{url_for('static', filename='js/barSocket.js')}}"></script>
 {% endblock %}

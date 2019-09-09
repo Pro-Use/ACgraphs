@@ -6,15 +6,17 @@ import re
 from vaderSentiment.vaderSentiment import SentimentIntensityAnalyzer
 from watson_developer_cloud import NaturalLanguageUnderstandingV1, watson_service
 from watson_developer_cloud.natural_language_understanding_v1 \
-    import Features, EmotionOptions, SentimentOptions
+    import Features, EmotionOptions
 import googlemaps
 from time import sleep, mktime, time
 from queue import Queue
-from threading import Thread
+from threading import Thread, enumerate
 from datetime import datetime, timedelta
 from piNewsServer import get_list_html, get_news_html
 from newsapi import NewsApiClient
 from PricingModelServer import calc_price, gen_data
+import quandl
+import os
 
 naturalLanguageUnderstanding = NaturalLanguageUnderstandingV1(
     version='2018-11-16',
@@ -54,8 +56,7 @@ news_list = []
 EMOTIONS =['JOY','ANGER','DISGUST','SADNESS','FEAR']
 
 pricing_models = {}
-ftse_data = None
-ftse_update = time() - 3601
+pricing_queue = Queue()
 
 class MyStreamListener(tweepy.StreamListener):
 
@@ -92,6 +93,8 @@ class MyStreamListener(tweepy.StreamListener):
                                                                geo['lat'],
                                                                geo['lng']))
             temp_con.commit()
+            temp_cursor.execute('SELECT max(id) FROM twitter')
+            new_id = temp_cursor.fetchone()[0]
             temp_con.close()
             print("adding data to queue")
             tweet_queue.put({'date': cur_date.strftime("%d/%m/%Y"),
@@ -103,7 +106,8 @@ class MyStreamListener(tweepy.StreamListener):
                             'disgust': emotion_scores['disgust'],
                             'sadness': emotion_scores['sadness'],
                             'fear': emotion_scores['fear'],
-                            'geo': geo
+                            'geo': geo,
+                             'id': new_id
                              })
 
 
@@ -171,6 +175,7 @@ def data_update_thread():
             new_tweet = tweet_queue.get()
             new_geo = new_tweet['geo']
             new_sentiment = new_tweet['sentiment']
+            # Tweet List
             new_tweet_line = get_news_html([[
                 new_tweet['tweet'],
                 new_tweet['sentiment'],
@@ -181,6 +186,8 @@ def data_update_thread():
                 new_tweet['fear']
             ]])
             emit_queue.put(['update-tweets', {'tweet_html': gen_tweet_line(new_tweet_line)}, '/graphSock'])
+            #  Scatter
+            pricing_queue.put(new_tweet['date'], new_tweet['sentiment'], new_tweet['id'])
             #  Heatmap
             if new_geo['lat'] is not None and new_sentiment < 0:
                 emit_queue.put(['update-heatmap', new_geo, '/graphSock'])
@@ -219,6 +226,56 @@ def bar_update_thread():
                              'fear': data[5]},'/graphSock'])
             sleep(2)
 
+def prices_update_thread():
+    ftse_data = None
+    ftse_update = time()
+    while True:
+        tweet_obj = pricing_queue.get()
+        if ftse_data is None or time() - ftse_update > 3600:
+            now = datetime.today()
+            if now.weekday() > 5:
+                days_prev = now.weekday() - 5 + 1
+            else:
+                days_prev = 1
+            start_date = "%s-%s-%s" % (now.year, now.month, now.day - days_prev)
+            end_date = "%s-%s-%s" % (now.year, now.month, now.day)
+            ftse_data = quandl.get("CHRIS/LIFFE_Z1", authtoken="NP-HERKjNAxszM1r66X6",
+                                   start_date=start_date, end_date=end_date)
+            ftse_update = time()
+        d, m, y = tweet_obj[0].split('/')
+        u_con = sqlite3.connect('db/graphs_db.db')
+        u_cursor = u_con.cursor()
+        u_cursor.execute('''INSERT into prices(id, sentiment) VALUES (?,?)''',
+                         (tweet_obj[2], tweet_obj[1]))
+        u_con.commit()
+        ftse = ftse_data.loc["%s-%s-%s" % (y, m, d)]
+        for company in pricing_models:
+            u_con = sqlite3.connect('db/graphs_db.db')
+            u_cursor = u_con.cursor()
+            u_cursor.execute(
+                '''UPDATE prices SET "{company}" = ? WHERE id = ?'''.format(**{"company": company.replace(' ', '')}),
+                (
+                    calc_price(company, ftse.Settle, tweet_obj[1]),
+                    tweet_obj[2]
+                ))
+            u_con.commit()
+
+def scatter_update_thread():
+    while True:
+        for company in pricing_models:
+            u_con = sqlite3.connect('db/graphs_db.db')
+            u_cursor = u_con.cursor()
+            u_cursor.execute('''SELECT "{company}", sentiment
+                                    FROM prices'''.format(**{"company": company.replace(' ', '')}))
+            company_data = u_cursor.fetchall()
+            try:
+                for i in range(len(company_data)):
+                    company_data[i] = [float(company_data[i][0]), company_data[i][1]]
+                emit_queue.put(['update-scatter', {'data': company_data}, '/graphSock'])
+                sleep(5)
+            except TypeError:
+                pass
+
 def update_candle():
     candle_con = sqlite3.connect('db/graphs_db.db')
     cursor = candle_con.cursor()
@@ -244,25 +301,47 @@ def update_candle():
         high = row[2]
         low = row[3]
         new_candle_data.append([int(timestamp), [opening, high, low, closing]])
-    return candle_data
+    return new_candle_data
 
 def update_thread():
-    if not emit_queue.empty():
-        new_cmd = emit_queue.get()
-        socketio.emit(new_cmd[0], new_cmd[1], namespace=new_cmd[2])
-    else:
-        socketio.sleep(0.5)
+    while True:
+        if not emit_queue.empty():
+            new_cmd = emit_queue.get()
+            # if new_cmd[0] == 'update-scatter':
+            socketio.emit(new_cmd[0], new_cmd[1], namespace=new_cmd[2])
+            print("sent data to %s" % new_cmd[0])
+        else:
+            socketio.sleep(0.5)
 
 @socketio.on('connect', namespace='/graphSock')
 def connect():
     global update_vals
     if update_vals is None:
-        get_tweets = Thread(target=twitter_thread)
+        get_tweets = Thread(target=twitter_thread, name='twitter')
+        update_bar = Thread(target=bar_update_thread, name='bar')
+        update_scatter = Thread(target=scatter_update_thread, name='scatter')
+        update_prices = Thread(target=prices_update_thread, name='prices')
         get_tweets.start()
+        update_bar.start()
+        update_scatter.start()
+        update_prices.start()
+        print(enumerate())
         update_vals = socketio.start_background_task(target=update_thread)
     sleep(2)
     emit_queue.put(['restart', {'tickers': 1}, '/graphSock'])
     return
+
+@socketio.on('bg_change')
+def bg_event(bg_data):
+    print(bg_data)
+    screens = bg_data['screens']
+    bg_num = bg_data['bg_num']
+    for screen in screens:
+        if not os.path.exists('static/images/screen%s_%s.jpg' % (screen, bg_num)):
+            print('static/images/screen%s_%s.jpg does not exist' % (screen, bg_num))
+            return
+    emit_queue.put(['update-bg', {'bg': bg_num, 'screens': screens}, '/graphSock'])
+
 
 @app.route('/heatmap')
 def heatmap():
@@ -300,13 +379,19 @@ def right():
 def news_top():
     tweet_file = 'list.html'
     return render_template(tweet_file, async_mode=socketio.async_mode,
-                           initial_data=list_articles)
+                           position=0, initial_data=list_articles)
 
 @app.route('/list_bottom')
 def news_bottom():
     tweet_file = 'list.html'
     return render_template(tweet_file, async_mode=socketio.async_mode,
-                           initial_data=list_articles)
+                           position=1, initial_data=list_articles)
+
+@app.route('/scatter')
+def scatter():
+    scatter_file = 'scatter.html'
+    return render_template(scatter_file, async_mode=socketio.async_mode, initial_data=[],
+                        price_data=price_data)
 
 if __name__ == '__main__':
     print('getting data...')
@@ -356,6 +441,18 @@ if __name__ == '__main__':
 
     ticker_html = get_news_html(articles)
     news_list = get_list_html(cursor.fetchall())
+
+    cursor.execute('''SELECT *
+                            FROM price_model_data''')
+
+    all_data = cursor.fetchall()
+    cursor.execute('''SELECT * FROM prices ORDER BY id DESC LIMIT 1; ''')
+    latest_price = cursor.fetchall()[0]
+    price_data = []
+    for i in range(len(all_data)):
+        data = all_data[i]
+        pricing_models[data[0]] = {"mod": data[1], "hdd": data[2], "ftse": data[3], "bpa": data[4]}
+        price_data.append([data[0][0:20], "£%.2f" % float(latest_price[i + 2])])
 
 
     print('starting app')

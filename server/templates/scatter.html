@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
 {% block body %}
-<body class="stats-page" style="overflow:hidden;background-image:url({{url_for('static', filename='images/Ami-scatter-ref.png')}})">
+<body class="stats-page" style="overflow:hidden;background-image:url()">
 <div class="scatter-container">
     <div id="scatter"></div>
     <div id="prices">
@@ -97,6 +97,6 @@
 
         scatterchart.render();
 </script>
-
 </body>
+<script src="{{url_for('static', filename='js/scatterSocket.js')}}"></script>
 {% endblock %}

@@ -1,6 +1,12 @@
 {% extends "layout.html" %}
 {% block body %}
-<body class="list-body">
+<body class="list-body"
+	{% if position == 0 %}
+	  data-screen="3"
+	  {% else %}
+	  data-screen="6"
+	  {%endif%}
+	>
 	<ul class="list-container">
 		<!-- Loop Start -->
 		{%for item in initial_data%}
@@ -22,4 +28,5 @@
 		<!-- Loop End -->
 	</ul>
 </body>
+<script src="{{url_for('static', filename='js/listSocket.js')}}"></script>
 {% endblock %}
