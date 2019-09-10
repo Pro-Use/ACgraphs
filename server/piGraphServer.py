@@ -268,11 +268,12 @@ def scatter_update_thread():
             u_cursor.execute('''SELECT "{company}", sentiment
                                     FROM prices'''.format(**{"company": company.replace(' ', '')}))
             company_data = u_cursor.fetchall()
+            company_data = company_data[0:100]
             try:
                 for i in range(len(company_data)):
                     company_data[i] = [float(company_data[i][0]), company_data[i][1]]
                 emit_queue.put(['update-scatter', {'data': company_data}, '/graphSock'])
-                sleep(5)
+                sleep(10)
             except TypeError:
                 pass
 
