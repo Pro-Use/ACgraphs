@@ -1,0 +1,70 @@
+{% extends "layout.html" %}
+{% block body %}
+<body class="news">
+
+<div id="candle" style="height: 300px; width: 100%;"></div>
+
+<script>
+	  var candle_options = {
+      chart: {
+        height: 1080,
+        width: 1920,
+        type: 'candlestick'
+      },
+      plotOptions: {
+          candlestick: {
+            colors: {
+              upward: '#0000ff',
+              downward: '#0000ff'
+            }
+          }
+      },
+      grid: {
+        show: false,
+      },
+      tooltip: {
+          enabled: false,
+      },
+      series: [{
+        data: [
+        {%for item in sentiment_list%}
+        {
+            x: {{item[0]}},
+            y: {{item[1]}}
+          },
+        {%endfor%}
+        ]
+      }],
+      stroke: {
+        width: 1
+      },
+      xaxis: {
+        labels: {
+            show: false,
+        },
+        title: {
+            text: 'BPA twitter sentiment: opening/closing, high/low',
+            style: {
+                color: '#0000ff',
+                fontSize: '21px',
+                fontFamily: 'Helvetica, Arial, sans-serif',
+            }
+        }
+      },
+      yaxis: {
+        labels: {
+            show: false,
+        },
+      }
+    };
+
+    var candle_chart = new ApexCharts(
+      document.querySelector("#candle"),
+      candle_options
+    );
+
+    candle_chart.render();
+</script>
+
+</body>
+{% endblock %}
