@@ -23,6 +23,11 @@ $(document).ready(function() {
         if (msg.screens.includes(screen_num)) {
             $("body").css("background-size", "cover");
             $("body").css("background-image", "url('static/images/screen"+screen_num+"_"+msg.bg+".jpg')");
+            if (msg.bg == 1) {
+                $("list-container").css("color", "lime");
+            } else {
+                $("list-container").css("color", "white");
+            }
         }
     });
  });
