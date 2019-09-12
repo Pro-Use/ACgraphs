@@ -9,12 +9,19 @@ $(document).ready(function() {
             });
 
     socket.on('update-scatter', function(msg) {
-        console.log(msg.data)
-        var new_data = [];
-        scatterchart.updateSeries([{name: "SAMPLE A",
-        data:
-            msg.data
-        }])
+        console.log(msg)
+        scatterchart.updateOptions({
+              yaxis: {
+                min: parseFloat(msg.min_max[0]),
+                max: parseFloat(msg.min_max[1])
+              }
+            })
+
+        scatterchart.updateSeries([{name: "happy",
+        data: msg.happy
+        }, { name: "sad",
+        data: msg.sad
+        } ])
     });
 
     var screen_num = 5;

@@ -265,14 +265,24 @@ def scatter_update_thread():
         for company in pricing_models:
             u_con = sqlite3.connect('db/graphs_db.db')
             u_cursor = u_con.cursor()
-            u_cursor.execute('''SELECT "{company}", sentiment
+            u_cursor.execute('''SELECT min("{0}"), max("{0}") FROM prices'''
+                             .format(company.replace(' ', '')))
+            min_max = u_cursor.fetchall()
+            min_max = min_max[0]
+            u_cursor.execute('''SELECT "{company}", sentiment, date_time
                                     FROM prices'''.format(**{"company": company.replace(' ', '')}))
             company_data = u_cursor.fetchall()
+            company_data.reverse()
             company_data = company_data[0:100]
+            happy = []
+            sad = []
             try:
                 for i in range(len(company_data)):
-                    company_data[i] = [float(company_data[i][0]), company_data[i][1]]
-                emit_queue.put(['update-scatter', {'data': company_data}, '/graphSock'])
+                    if company_data[i][1] >= 0:
+                        happy.append([float(company_data[i][2]), float(company_data[i][0])])
+                    else:
+                        sad.append([float(company_data[i][2]), float(company_data[i][0])])
+                emit_queue.put(['update-scatter', {'happy': happy, 'sad': sad, 'min_max':min_max}, '/graphSock'])
                 sleep(10)
             except TypeError:
                 pass
