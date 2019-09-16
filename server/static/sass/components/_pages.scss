@@ -89,11 +89,11 @@ NEWS TICKER
 }
 
 .green .news-headline{
-    color: rgb(0, 255, 0);
+    color: #9ed600;
 }
 
 .red .news-headline{
-    color: rgb(245, 19, 19);
+    color: tomato;
 }
 
 
@@ -259,6 +259,7 @@ LIST PAGE
     overflow: hidden;
     font-family: doublet;
     line-height: 45px;
+    color: #9ed600;
 }
 
 .list-item{
@@ -409,6 +410,7 @@ STATS CONTAINER
     bottom: 0;
     right: 0;
     padding: 0px 70px 45px 0px;
+    colour: rgb(158,214,0);
 }
 
 .line{
@@ -474,19 +476,14 @@ STATS CONTAINER
     float: right;
 }
 
-
-
-
-
-
-
 #prices {
-    height: 980px;
-    width:450px;
+    height: 990px;
+    width:650px;
     overflow: hidden;
     margin: 35px 10px 0px 50px;
     font-size: 1.2em;
     line-height: 2em;
+    color: rgb(158,214,0);
 }
 
 .company {
