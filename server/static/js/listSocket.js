@@ -30,4 +30,13 @@ $(document).ready(function() {
             }
         }
     });
+
+    function update_news() {
+          setInterval(function(){
+          var parent = document.getElementById('news');
+          parent.insertBefore(parent.firstElementChild, parent.lastElementChild);
+          }, 3000);
+        }
+
+    update_news();
  });

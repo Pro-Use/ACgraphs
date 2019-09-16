@@ -49,4 +49,13 @@ $(document).ready(function() {
             $("body").css("background-image", "url('static/images/screen"+screen_num+"_"+msg.bg+".jpg')");
         }
     });
+
+    function update_news() {
+          setInterval(function(){
+          var parent = document.getElementById('left-news-feed');
+          parent.insertBefore(parent.firstElementChild, parent.lastElementChild);
+          }, 3000);
+        }
+
+    update_news();
  });

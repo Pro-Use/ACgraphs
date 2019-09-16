@@ -85,7 +85,7 @@ $(document).ready(function() {
     socket.on('update-news', function(msg) {
         console.log('Updating News')
         var parent = document.getElementById('tweets');
-        parent.insertBefore(parent.firstChild, parent.lastChild);
+        parent.insertBefore(parent.firstElementChild, parent.lastElementChild);
     });
 
    socket.on('update-news-list', function(msg) {

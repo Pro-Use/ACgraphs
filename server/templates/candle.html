@@ -2,20 +2,23 @@
 {% block body %}
 <body class="news">
 
-<div id="candle" style="height: 300px; width: 100%;"></div>
+<div id="candle" style="height: 100%; width: 100%;"></div>
 
 <script>
 	  var candle_options = {
       chart: {
-        height: 1080,
-        width: 1920,
-        type: 'candlestick'
+        height: 1050,
+        width: 1900,
+        type: 'candlestick',
+        toolbar: {
+          show: false
+        },
       },
       plotOptions: {
           candlestick: {
             colors: {
               upward: '#0000ff',
-              downward: '#0000ff'
+              downward: 'rgb(255,255,255)'
             }
           }
       },
@@ -38,14 +41,21 @@
       stroke: {
         width: 1
       },
+      colors: ['rgba(0,0,0,0.0)'],
+      markers: {
+        colors: '#000',
+      },
       xaxis: {
         labels: {
+            show: false,
+        },
+        axisBorder: {
             show: false,
         },
         title: {
             text: 'BPA twitter sentiment: opening/closing, high/low',
             style: {
-                color: '#0000ff',
+                color: '#fff',
                 fontSize: '21px',
                 fontFamily: 'Helvetica, Arial, sans-serif',
             }
@@ -55,7 +65,10 @@
         labels: {
             show: false,
         },
-      }
+      },
+      tooltip: {
+            enabled: false,
+      },
     };
 
     var candlechart = new ApexCharts(
