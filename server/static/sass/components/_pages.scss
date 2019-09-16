@@ -235,7 +235,9 @@ div[id^="ti_content"]{
   to {left:-50%;}
 }
 
-
+img.emoji {
+    height: 25px;
+}
 
 /*  
 ================================================================
@@ -398,6 +400,7 @@ STATS CONTAINER
 .stats-page{
     background-color:rgb(117,117,105);
     /*background-image: url('img/data-bg.png');*/
+    font-family: 'Myriad' !important;
 }
 
 .stats-container{

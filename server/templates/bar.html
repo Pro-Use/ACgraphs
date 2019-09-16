@@ -4,62 +4,108 @@
 
 <div id="bar" style="margin-left:30px;"></div>
 
+
 	<div class="stats-container">
 
-		<div class="line line1">
+		<div class="line w-100">
 			<br>
 		</div>
 
-		<div class="line line6">
-			<span class="align-centre w-20">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Frequency</span>
+		<div class="line w-94">
+			<span class="w-70 align-right"><i>frequency</i></span>
 		</div>
 
-		<div class="line line11">
-				<span class="stat-title">tweets / senti analysis</span> <span class="stat-unit align-right">ns</span> <span class="stat align-right">10032.0002341</span>
+		<div class="line w-89">
+				<span style="padding-left:50px;" class="stat-title">tweets / senti analysis</span> <span class="stat-unit align-right">ns</span> <span class="stat align-right">10032.0002341</span>
 		</div>
 
-		<div class="line line16">
-				<span class="stat-title">news / senti analysis</span> <span class="stat-unit align-right">ns</span> <span class="stat align-right">10032.0002341</span>
+		<div class="line w-84">
+				<span style="padding-left:40px;" class="stat-title">news / senti analysis</span> <span class="stat-unit align-right">ns</span> <span class="stat align-right">10032.0002341</span>
 		</div>
 
-		<div class="line line21">
-				<span class="stat-title">cognitive processing</span> <span class="stat-unit align-right">s</span> <span class="stat align-right">10032.0002341</span>
+		<div class="line w-79">
+				<span style="padding-left:35px;" class="stat-title">cognitive processing</span> <span class="stat-unit align-right">s</span> <span class="stat align-right">10032.0002341</span>
 		</div>
 
-		<div class="line line">
-				<span class="stat-title">non-cognitive processing</span> <span class="stat-unit align-right">ms</span> <span class="stat align-right">10032.0002341</span>
+		<div class="line w-74">
+				<span style="padding-left:24px;" class="stat-title">non-cognitive processing</span> <span class="stat-unit align-right">ms</span> <span class="stat align-right">10032.0002341</span>
 		</div>
 
-		<div class="line line7">
-				<span class="stat-title">exhibition</span> <span class="stat-unit align-right">d</span> <span class="stat align-right">48</span>
+		<div class="line w-70">
+				<span style="padding-left:30px;" class="stat-title">exhibition</span> <span class="stat-unit align-right">d</span> <span class="stat align-right">48</span>
 		</div>
 
-		<div class="line line8 tall">
-				<span class="stat-title">electricity</span> <span class="stat-unit align-right">mps</span> <span class="stat narrow align-right">280,000,000</span>
+		<div class="line w-66 tall">
+				<span style="padding-left:66px;" class="stat-title">electricity</span> <span class="stat-unit">mps</span> <span id="electricity" class="stat narrow align-right">280,000,000</span>
 		</div>
 
-		<div class="line line9">
-				<span class="stat-title">raspberry pi</span> <span class="stat-unit align-right">Mhz</span> <span class="stat narrow align-right">60</span>
+		<div class="line w-59">
+				<span style="padding-left:27px;" class="stat-title">raspberry pi</span> <span class="stat-unit">Mhz</span> <span id="rasberry" class="stat narrow align-right">60</span>
 		</div>
 
-		<div class="line line10">
-				<span class="stat-title">broadband</span> <span class="stat-unit align-right">Mbps</span> <span class="stat narrow align-right">30</span>
+		<div class="line w-55">
+				<span style="padding-left:23px;" class="stat-title">broadband</span> <span class="stat-unit">Mbps</span> <span id="broadband" class="stat narrow align-right">30</span>
 		</div>
 
-		<div class="line line11">
-				<span class="stat-title">screen refresh</span> <span class="stat-unit align-right">Mhz</span> <span class="stat narrow align-right">300</span>
+		<div class="line w-52">
+				<span style="padding-left:21px;" class="stat-title">screen refresh</span> <span class="stat-unit">Mhz</span> <span class="stat narrow align-right">300</span>
 		</div>
 
 
-		<div class="line line12">
-				<span class="stat-title">video codec</span> <span class="stat-unit align-right">fps</span> <span class="stat narrow align-right">25</span>
+		<div class="line w-49">
+				<span style="padding-left:21px;" class="stat-title">video</span> <span class="stat-unit">fps</span> <span class="stat narrow align-right">25</span>
 		</div>
 
-		<div class="line line13">
+		<div class="line w-46">
 
 		</div>
 
 	</div>
+	<script src="../static/js/jquery.min.js"></script>
+	<script type="text/javascript">
+		var broadband = 34;
+		var rasberry = 60;
+		var electricity = 280000000;
+
+		$.fn.digits = function(){
+		    return this.each(function(){
+		        $(this).text( $(this).text().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") );
+		    })
+		}
+
+		setInterval(
+			function(){
+				var num = Math.floor(Math.random()*4) + 1; // this will get a number between 1 and 99;
+				num *= Math.floor(Math.random()*2) == 1 ? 1 : -1; // this will add minus sign in 50% of cases
+				changeStat('broadband', broadband, num);
+			}, 1000
+		);
+
+		setInterval(
+			function(){
+				var num = Math.floor(Math.random()*5) + 1; // this will get a number between 1 and 99;
+				num *= Math.floor(Math.random()*2) == 1 ? 1 : -1; // this will add minus sign in 50% of cases
+				changeStat('rasberry', rasberry, num);
+			}, 1000
+		);
+
+		setInterval(
+			function(){
+				var num = Math.floor(Math.random()*5000) + 1; // this will get a number between 1 and 99;
+				num *= Math.floor(Math.random()*2) == 1 ? 1 : -1; // this will add minus sign in 50% of cases
+				changeStat('electricity', electricity, num);
+			}, 1000
+		);
+
+		function changeStat(id,base,change){
+			var val = base + change;
+			$('#'+id).html(val);
+			if(id == 'electricity'){
+				$('#'+id).digits();
+			}
+		}
+
+	</script>
 
 <script>
 	  var options = {
