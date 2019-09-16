@@ -15,8 +15,8 @@ $(document).ready(function() {
                 min: parseFloat(msg.min_max[0]),
                 max: parseFloat(msg.min_max[1]),
                 labels: {
-                    show: true,
-                    align: 'right',
+                    show: false,
+                    align: 'left',
                     style: {
                       color: 'rgb(158,214,0)',
                       fontSize: '30px',
