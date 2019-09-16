@@ -13,7 +13,17 @@ $(document).ready(function() {
         scatterchart.updateOptions({
               yaxis: {
                 min: parseFloat(msg.min_max[0]),
-                max: parseFloat(msg.min_max[1])
+                max: parseFloat(msg.min_max[1]),
+                labels: {
+                    show: true,
+                    align: 'right',
+                    style: {
+                      color: 'rgb(158,214,0)',
+                      fontSize: '30px',
+                      fontFamily: 'doublet',
+                      cssClass: 'scatter-yaxis-label',
+                  },
+                },
               }
             })
 
