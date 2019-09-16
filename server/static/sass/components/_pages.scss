@@ -396,7 +396,8 @@ STATS CONTAINER
 */
 
 .stats-page{
-    background:rgb(117,117,105);
+    background-color:rgb(117,117,105);
+    /*background-image: url('img/data-bg.png');*/
 }
 
 .stats-container{
@@ -404,39 +405,51 @@ STATS CONTAINER
     position: fixed;
     bottom: 0;
     right: 0;
-    padding: 0px 80px 55px 0px;
+    padding: 0px 70px 45px 0px;
 }
 
 .line{
-    padding:13px 0 3px 1.5%;
-    min-height:1em;
-    border-top: 1px solid rgb(0,0,255);
+    padding:10px 0 6px 1.5%;
+    min-height:45px;
+    border-top: 1px solid rgb(0,235,255);
     float:right;
     text-align: right;
-    font-size: 1.5em;
+    font-size: 1.625em;
     span{
         display: inline-block;
     }
 }
 
 .stat-title{
+    font-style: italic;
     float: left;
 }
 
 .line:last-child{
-    height:1px;
+    height: 1px;
+    padding: 0px;
+    min-height: 0;
+}
+
+.stat-unit{
+    text-align: left;
+    width:65px;
+}
+
+.stat-unit.align-right{
+    text-align: right;
 }
 
 .stat{
-    width:25vw;
+    width:19vw;
 }
 
 .stat.narrow{
-    width:17vw;
+    width:10vw;
 }
 
 .line.tall{
-    padding-top: 2em;
+    padding-top: 2.1em;
 }
 
 @for $i from 1 through 13 {
@@ -445,12 +458,24 @@ STATS CONTAINER
   }
 }
 
-@for $i from 0 through 20 {
+@for $i from 0 through 100 {
   .w-#{$i} {
     float: left;
-    width: 100% / 20 * $i;
+    width: 100% / 100 * $i;
   }
 }
+
+.line{
+    display: block;
+    clear: both;
+    float: right;
+}
+
+
+
+
+
+
 
 #prices {
     height: 980px;
