@@ -370,6 +370,17 @@ def connect():
         update_vals = socketio.start_background_task(target=update_thread)
     sleep(2)
     emit_queue.put(['restart', {'tickers': 1}, '/graphSock'])
+    emit_queue.put(['update-vr-tweet',
+                  {'tweet': 'BPA H@ppy',
+                   'sentiment': 0.0,
+                   'joy': 0.0,
+                   'anger': 0.0,
+                   'disgust': 0.0,
+                   'sadness': 0.0,
+                   'fear': 0.0 }, '/graphSock'])
+    emit_queue.put(['update-vr-news',
+                  {'news': "THE 10 SURPRISING THINGS YOU CAN'T RECYCLE",
+                   'sentiment': 0.0},'/graphSock'])
     return
 
 @socketio.on('bg_change')
