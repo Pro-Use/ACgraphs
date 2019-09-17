@@ -31,12 +31,10 @@ $(document).ready(function() {
         }
     });
 
-    function update_news() {
-          setInterval(function(){
-          var parent = document.getElementById('news');
-          parent.insertBefore(parent.firstElementChild, parent.lastElementChild);
-          }, 3000);
-        }
+    socket.on('change', function(msg){
+      var parent = document.getElementById('news');
+      parent.insertBefore(parent.firstElementChild, parent.lastElementChild);
+    });
 
     update_news();
  });

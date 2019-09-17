@@ -15,7 +15,7 @@ $(document).ready(function() {
             var newone = elm.cloneNode(true);
             elm.parentNode.replaceChild(newone, elm);
             var width = newone.offsetWidth;
-            var new_speed = width / 64;
+            var new_speed = width / 300;
             console.log(new_speed + 's')
             console.log(width)
             newone.style.animationDuration = new_speed + 's';
@@ -50,12 +50,11 @@ $(document).ready(function() {
         }
     });
 
-    function update_news() {
-          setInterval(function(){
-          var parent = document.getElementById('left-news-feed');
-          parent.insertBefore(parent.firstElementChild, parent.lastElementChild);
-          }, 3000);
-        }
 
-    update_news();
+    socket.on('change', function(msg){
+      var parent = document.getElementById('left-news-feed');
+      parent.insertBefore(parent.firstElementChild, parent.lastElementChild);
+    });
+
+
  });

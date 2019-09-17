@@ -3,12 +3,15 @@
 <body class="news">
 
 <div id="candle" style="height: 100%; width: 100%;"></div>
-
+<div class="candle_text">
+    {% for i in range(49) %}
+    <span class="hour">{{ -49 + i }}</span>
+    {% endfor %}
+</div>
 <script>
 	  var candle_options = {
       chart: {
         height: 1050,
-        width: 1900,
         type: 'candlestick',
         toolbar: {
           show: false
@@ -17,7 +20,7 @@
       plotOptions: {
           candlestick: {
             colors: {
-              upward: '#00EBFF',
+              upward: '#4abdac',
               downward: 'rgb(158,214,0)'
             }
           }
@@ -52,20 +55,26 @@
         axisBorder: {
             show: false,
         },
-        title: {
-            text: 'BPA twitter sentiment: opening/closing, high/low',
-            style: {
-                color: 'rgb(158,214,0)',
-                fontSize: '21px',
-                fontFamily: 'Helvetica, Arial, sans-serif',
-            }
-        }
-      },
-      yaxis: {
         labels: {
             show: false,
         },
       },
+      yaxis: {
+        labels: {
+            show: true,
+            align: 'left',
+            style: {
+              color: 'rgb(158,214,0)',
+              fontSize: '19px',
+              fontFamily: 'doublet',
+              cssClass: 'ylabel',
+            },
+            formatter: function(val, index) {
+                return val.toFixed(1);
+            },
+        },
+      },
+
       tooltip: {
             enabled: false,
       },

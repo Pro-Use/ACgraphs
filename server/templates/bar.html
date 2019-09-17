@@ -1,5 +1,10 @@
 {% extends "layout.html" %}
 {% block body %}
+<style>
+text {
+	transform: translateY(25px);
+	}
+</style>
 <body class="stats-page" style="overflow:hidden;">
 
 <div id="bar" style="margin-left:30px;"></div>
@@ -16,19 +21,19 @@
 		</div>
 
 		<div class="line w-89">
-				<span style="padding-left:50px;" class="stat-title">tweets / senti analysis</span> <span class="stat-unit align-right">ns</span> <span class="stat align-right">10032.0002341</span>
+				<span style="padding-left:50px;" class="stat-title">tweets / senti analysis</span> <span class="stat-unit align-right">ns</span> <span id='tc1' class="stat align-right">10032.0002341</span>
 		</div>
 
 		<div class="line w-84">
-				<span style="padding-left:40px;" class="stat-title">news / senti analysis</span> <span class="stat-unit align-right">ns</span> <span class="stat align-right">10032.0002341</span>
+				<span style="padding-left:40px;" class="stat-title">news / senti analysis</span> <span class="stat-unit align-right">ns</span> <span id='tc2' class="stat align-right">10032.0002341</span>
 		</div>
 
 		<div class="line w-79">
-				<span style="padding-left:35px;" class="stat-title">cognitive processing</span> <span class="stat-unit align-right">s</span> <span class="stat align-right">10032.0002341</span>
+				<span style="padding-left:35px;" class="stat-title">cognitive processing</span> <span class="stat-unit align-right">s</span> <span id='tc3' class="stat align-right">10032.0002341</span>
 		</div>
 
 		<div class="line w-74">
-				<span style="padding-left:24px;" class="stat-title">non-cognitive processing</span> <span class="stat-unit align-right">ms</span> <span class="stat align-right">10032.0002341</span>
+				<span style="padding-left:24px;" class="stat-title">non-cognitive processing</span> <span class="stat-unit align-right">ms</span> <span id='tc4' class="stat align-right">10032.0002341</span>
 		</div>
 
 		<div class="line w-70">
@@ -75,10 +80,19 @@
 
 		setInterval(
 			function(){
+				for (var i = 1; i < 5; i++) {
+					var new_tc = (Date.now() / 1000) + Math.random();
+					$('#tc' + i).html(new_tc);
+				}
+			}, 100
+		);
+
+		setInterval(
+			function(){
 				var num = Math.floor(Math.random()*4) + 1; // this will get a number between 1 and 99;
 				num *= Math.floor(Math.random()*2) == 1 ? 1 : -1; // this will add minus sign in 50% of cases
 				changeStat('broadband', broadband, num);
-			}, 1000
+			}, 100
 		);
 
 		setInterval(
@@ -86,7 +100,7 @@
 				var num = Math.floor(Math.random()*5) + 1; // this will get a number between 1 and 99;
 				num *= Math.floor(Math.random()*2) == 1 ? 1 : -1; // this will add minus sign in 50% of cases
 				changeStat('rasberry', rasberry, num);
-			}, 1000
+			}, 100
 		);
 
 		setInterval(
@@ -94,8 +108,10 @@
 				var num = Math.floor(Math.random()*5000) + 1; // this will get a number between 1 and 99;
 				num *= Math.floor(Math.random()*2) == 1 ? 1 : -1; // this will add minus sign in 50% of cases
 				changeStat('electricity', electricity, num);
-			}, 1000
+			}, 100
 		);
+
+
 
 		function changeStat(id,base,change){
 			var val = base + change;
@@ -118,19 +134,20 @@
                     horizontal: true,
                     dataLabels: {
                         position: 'bottom',
-                    }
+                    },
+                    barHeight: '70%',
                 }
             },
             dataLabels: {
               enabled: true,
-              position: 'bottom',
               textAnchor: 'start',
               style: {
-            	fontSize: '1.5em',
+            	fontSize: '4.2em',
             	colors: ['#9ed600'],
+            	fontFamily: 'doublet',
               },
               formatter: function(val, opt) {
-                  return opt.w.globals.labels[opt.dataPointIndex]
+                  return opt.w.globals.labels[opt.dataPointIndex].toUpperCase()
               },
               offsetX: 0,
               offsetY: 0,

@@ -75,18 +75,20 @@ NEWS TICKER
 
 .emotion{
     text-transform: uppercase;
-    margin-right: 28px;
+    margin-right: -28px;
 }
 
 .score {
     margin-right: 44px;
 }
 
-.news-headline{
+span.news-headline{
     word-break: break-all;
     height: 1em;
     overflow: hidden;
+    flex-basis: 72%;
 }
+
 
 .green .news-headline{
     color: #9ed600;
@@ -391,7 +393,6 @@ LIST PAGE
     /*font-size: 12vh;*/
 }
 
-
 /*  
 ================================================================
 STATS CONTAINER
@@ -492,4 +493,25 @@ STATS CONTAINER
 
 .scatter-container {
     display: flex;
+}
+
+/*
+================================================================
+CANDLE CONTAINER
+================================================================
+*/
+
+.candle_text {
+    display: flex;
+    position: relative;
+    top: -50px;
+    margin-left: 10px;
+    margin-right: 10px;
+}
+
+.hour {
+    flex-grow: 1;
+    font-family: doublet;
+    color: rgb(158,214,0);
+    font-size: 1.2em;
 }
