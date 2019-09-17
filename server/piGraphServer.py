@@ -193,6 +193,15 @@ def data_update_thread():
                 emit_queue.put(['update-heatmap', new_geo, '/graphSock'])
             bar_data.append([None, new_tweet['joy'], new_tweet['anger'], new_tweet['disgust'],
                                     new_tweet['sadness'], new_tweet['fear']])
+            # vr
+            emit_queue.put(['update-vr-tweet',
+                          {'tweet': new_tweet['tweet'],
+                           'sentiment': new_tweet['sentiment'],
+                           'joy': new_tweet['joy'],
+                           'anger': new_tweet['anger'],
+                           'disgust': new_tweet['disgust'],
+                           'sadness': new_tweet['sadness'],
+                           'fear': new_tweet['fear']}, '/graphSock'])
             #  Candle
             if new_tweet['hour'] != candle_hour:
                 new_candle_data = update_candle()
@@ -224,7 +233,20 @@ def bar_update_thread():
                              'disgust': data[3],
                              'sadness': data[4],
                              'fear': data[5]},'/graphSock'])
+            emit_queue.put(['change', {'all': True}, '/graphSock'])
             sleep(2)
+
+def vr_update_thread(news):
+    while True:
+        for news_article in news:
+            if len(news_article[2]) > 240:
+                headline = news_article[2][0:240]
+            else:
+                headline = news_article[2]
+            emit_queue.put(['update-vr-news',
+                          {'news': headline,
+                           'sentiment': news_article[0]},'/graphSock'])
+            sleep(1)
 
 def prices_update_thread():
     ftse_data = None
@@ -299,10 +321,12 @@ def update_candle():
                         GROUP BY date,
                              hour''')
     new_cursor = candle_con.cursor()
-    now = datetime.today()
-    for row in cursor:
-        now -= timedelta(hours=1)
-        timestamp = mktime(now.timetuple())
+    now = 0
+    cursor_data = cursor.fetchall()
+    cursor_data.reverse()
+    for row in cursor_data:
+        now -= 1
+        timestamp = now
         new_cursor.execute('''SELECT fear
                             FROM twitter
                             WHERE date=? AND hour=?''', (row[0], row[1]))
@@ -312,6 +336,8 @@ def update_candle():
         high = row[2]
         low = row[3]
         new_candle_data.append([int(timestamp), [opening, high, low, closing]])
+    # new_candle_data.reverse()
+    new_candle_data = new_candle_data[-48:]
     return new_candle_data
 
 def update_thread():
@@ -329,13 +355,17 @@ def connect():
     global update_vals
     if update_vals is None:
         get_tweets = Thread(target=twitter_thread, name='twitter')
+        data_update = Thread(target=data_update_thread, name='data')
         update_bar = Thread(target=bar_update_thread, name='bar')
         update_scatter = Thread(target=scatter_update_thread, name='scatter')
         update_prices = Thread(target=prices_update_thread, name='prices')
+        update_vr = Thread(target=vr_update_thread, args=[list_articles], name='vr')
         get_tweets.start()
+        data_update.start()
         update_bar.start()
         update_scatter.start()
         update_prices.start()
+        update_vr.start()
         print(enumerate())
         update_vals = socketio.start_background_task(target=update_thread)
     sleep(2)
@@ -403,6 +433,11 @@ def scatter():
     scatter_file = 'scatter.html'
     return render_template(scatter_file, async_mode=socketio.async_mode, initial_data=[],
                         price_data=price_data)
+
+@app.route('/vr')
+def vr():
+    vr_file = 'vr.html'
+    return render_template(vr_file, async_mode=socketio.async_mode )
 
 if __name__ == '__main__':
     print('getting data...')
