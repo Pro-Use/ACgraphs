@@ -15,7 +15,7 @@ $(document).ready(function() {
             var newone = elm.cloneNode(true);
             elm.parentNode.replaceChild(newone, elm);
             var width = newone.offsetWidth;
-            var new_speed = width / 300;
+            var new_speed = width / 64;
             console.log(new_speed + 's')
             console.log(width)
             newone.style.animationDuration = new_speed + 's';
