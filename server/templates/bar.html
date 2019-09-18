@@ -81,7 +81,13 @@ text {
 		setInterval(
 			function(){
 				for (var i = 1; i < 5; i++) {
-					var new_tc = (Date.now() / 1000) + Math.random();
+					if (i < 3) {
+						var new_tc = (Date.now() / 1000) + Math.random();
+					} else if (i == 3) {
+						var new_tc = Math.floor((Date.now() / 1000));
+					} else {
+						var new_tc = Math.round((Date.now() / 1000) + Math.random()) / 100;
+					}
 					$('#tc' + i).html(new_tc);
 				}
 			}, 100
@@ -126,7 +132,7 @@ text {
 <script>
 	  var options = {
             chart: {
-                height: 436,
+                height: 500,
                 type: 'bar',
             },
             plotOptions: {
@@ -135,7 +141,7 @@ text {
                     dataLabels: {
                         position: 'bottom',
                     },
-                    barHeight: '70%',
+                    barHeight: '80%',
                 }
             },
             dataLabels: {

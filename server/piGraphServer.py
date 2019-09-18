@@ -17,6 +17,7 @@ from newsapi import NewsApiClient
 from PricingModelServer import calc_price, gen_data
 import quandl
 import os
+import traceback
 
 naturalLanguageUnderstanding = NaturalLanguageUnderstandingV1(
     version='2018-11-16',
@@ -97,8 +98,10 @@ class MyStreamListener(tweepy.StreamListener):
             new_id = temp_cursor.fetchone()[0]
             temp_con.close()
             print("adding data to queue")
+            global tweet_queue
             tweet_queue.put({'date': cur_date.strftime("%d/%m/%Y"),
                              'hour': cur_date.hour,
+                             'minute': cur_date.minute,
                             'tweet': cleaned_tweet,
                             'sentiment': sentiment_score,
                             'joy': emotion_scores['joy'],
@@ -168,26 +171,29 @@ def twitter_thread():
 
 
 def data_update_thread():
-    global bar_data
+    global bar_data, tweet_queue
     candle_hour = datetime.now().hour
     while True:
         if not tweet_queue.empty():
+            print("***New Tweet Data***")
             new_tweet = tweet_queue.get()
             new_geo = new_tweet['geo']
             new_sentiment = new_tweet['sentiment']
             # Tweet List
-            new_tweet_line = get_news_html([[
+            new_tweet_line = get_list_html([[
                 new_tweet['tweet'],
-                new_tweet['sentiment'],
                 new_tweet['joy'],
                 new_tweet['anger'],
                 new_tweet['disgust'],
                 new_tweet['sadness'],
-                new_tweet['fear']
+                new_tweet['fear'],
+                new_tweet['hour'],
+                new_tweet['minute'],
+                new_tweet['sentiment']
             ]])
-            emit_queue.put(['update-tweets', {'tweet_html': gen_tweet_line(new_tweet_line)}, '/graphSock'])
+            emit_queue.put(['update-tweets', {'tweet_html': gen_tweet_line(new_tweet_line[0])}, '/graphSock'])
             #  Scatter
-            pricing_queue.put(new_tweet['date'], new_tweet['sentiment'], new_tweet['id'])
+            # pricing_queue.put([new_tweet['date'], new_tweet['sentiment'], new_tweet['id']])
             #  Heatmap
             if new_geo['lat'] is not None and new_sentiment < 0:
                 emit_queue.put(['update-heatmap', new_geo, '/graphSock'])
@@ -264,23 +270,29 @@ def prices_update_thread():
             ftse_data = quandl.get("CHRIS/LIFFE_Z1", authtoken="NP-HERKjNAxszM1r66X6",
                                    start_date=start_date, end_date=end_date)
             ftse_update = time()
-        d, m, y = tweet_obj[0].split('/')
         u_con = sqlite3.connect('db/graphs_db.db')
         u_cursor = u_con.cursor()
-        u_cursor.execute('''INSERT into prices(id, sentiment) VALUES (?,?)''',
-                         (tweet_obj[2], tweet_obj[1]))
-        u_con.commit()
-        ftse = ftse_data.loc["%s-%s-%s" % (y, m, d)]
-        for company in pricing_models:
-            u_con = sqlite3.connect('db/graphs_db.db')
-            u_cursor = u_con.cursor()
-            u_cursor.execute(
-                '''UPDATE prices SET "{company}" = ? WHERE id = ?'''.format(**{"company": company.replace(' ', '')}),
-                (
-                    calc_price(company, ftse.Settle, tweet_obj[1]),
-                    tweet_obj[2]
-                ))
+        try:
+            d, m, y = tweet_obj[0].split('/')
+            ftse = ftse_data.loc["%s-%s-%s" % (y, m, int(d) - 1)]
+            u_cursor.execute('''INSERT into prices(id, sentiment) VALUES (?,?)''',
+                             (tweet_obj[2], tweet_obj[1]))
             u_con.commit()
+            for company in pricing_models:
+                u_con = sqlite3.connect('db/graphs_db.db')
+                u_cursor = u_con.cursor()
+                u_cursor.execute(
+                    '''UPDATE prices SET "{company}" = ? WHERE id = ?'''.format(**{"company": company.replace(' ', '')}),
+                    (
+                        calc_price(pricing_models, company, ftse.Settle, tweet_obj[1]),
+                        tweet_obj[2]
+                    ))
+                u_con.commit()
+        except Exception as e:
+            # u_cursor.execute('''DELETE from prices WHERE id = ?''', (tweet_obj[2]))
+            # u_con.commit()
+            print("Price Update Error: %s" % e )
+            traceback.print_exc()
 
 def scatter_update_thread():
     while True:
@@ -346,7 +358,7 @@ def update_thread():
             new_cmd = emit_queue.get()
             # if new_cmd[0] == 'update-scatter':
             socketio.emit(new_cmd[0], new_cmd[1], namespace=new_cmd[2])
-            print("sent data to %s" % new_cmd[0])
+            # print("sent data to %s" % new_cmd[0])
         else:
             socketio.sleep(0.5)
 
@@ -509,7 +521,11 @@ if __name__ == '__main__':
     for i in range(len(all_data)):
         data = all_data[i]
         pricing_models[data[0]] = {"mod": data[1], "hdd": data[2], "ftse": data[3], "bpa": data[4]}
-        price_data.append([data[0][0:20], "£%.2f" % float(latest_price[i + 2])])
+        try:
+            price_data.append([data[0][0:20], "£%.2f" % float(latest_price[i + 2])])
+        except Exception:
+            pass
+    print(pricing_models['Gazprom'])
 
 
     print('starting app')

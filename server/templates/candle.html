@@ -3,15 +3,15 @@
 <body class="news">
 
 <div id="candle" style="height: 100%; width: 100%;"></div>
-<div class="candle_text">
-    {% for i in range(49) %}
-    <span class="hour">{{ -49 + i }}</span>
-    {% endfor %}
-</div>
+<!--<div class="candle_text">-->
+    <!--{% for i in range(49) %}-->
+    <!--<span class="hour">{{ -49 + i }}</span>-->
+    <!--{% endfor %}-->
+<!--</div>-->
 <script>
 	  var candle_options = {
       chart: {
-        height: 1050,
+        height: 1150,
         type: 'candlestick',
         toolbar: {
           show: false
@@ -20,8 +20,8 @@
       plotOptions: {
           candlestick: {
             colors: {
-              upward: '#4abdac',
-              downward: 'rgb(158,214,0)'
+              upward: '#17ff0f',
+              downward: 'rgb(243, 255, 15)'
             }
           }
       },
@@ -42,7 +42,7 @@
         ]
       }],
       stroke: {
-        width: 1
+        width: 3
       },
       colors: ['rgba(0,0,0,0.0)'],
       markers: {
@@ -73,6 +73,8 @@
                 return val.toFixed(1);
             },
         },
+        min: 0.01,
+        max: 0.6,
       },
 
       tooltip: {

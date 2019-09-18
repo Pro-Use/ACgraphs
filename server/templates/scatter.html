@@ -7,7 +7,7 @@
         <ul>
             {% for data in price_data %}
             <li>
-                <span class="company w-68">{{data[0]}}</span><span class="value w-25">{{data[1]}}</span>
+                <span class="company w-65">{{data[0]}}</span><span class="value w-25">{{data[1]}}</span>
             </li>
             {% endfor %}
         </ul>
@@ -92,18 +92,17 @@
             },
             markers: {
                 strokeColors:["rgba(255,0,0,0)"],
-                size: 25,
+                size: 20,
                 strokeWidth: 0,
                 },
                 fill: {
-
-                type: "image",
-                opacity: 0.85,
-                image: {
-                  <!--src: ["data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle r='9' cx='9' cy='9' fill='%230000'/%3E%3Crect width='16' height='16' x='6' y='6' fill='blue'/%3E%3C/svg%3E"],-->
-                  src: ["{{url_for('static', filename='images/happy.png')}}", "{{url_for('static', filename='images/sad.png')}}"],
-                  width: 40,
-                  height: 40
+                    type: "image",
+                    opacity: 1,
+                    image: {
+                      <!--src: ["data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle r='9' cx='9' cy='9' fill='%230000'/%3E%3Crect width='16' height='16' x='6' y='6' fill='blue'/%3E%3C/svg%3E"],-->
+                      src: ["{{url_for('static', filename='images/happy.png')}}", "{{url_for('static', filename='images/sad.png')}}"],
+                      width: 40,
+                      height: 40
                 }
             }
         };

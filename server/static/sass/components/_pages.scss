@@ -38,6 +38,7 @@ NEWS TICKER
     font-family: 'Myriad', sans-serif;
     background:rgb(117,117,105);
     color:white;
+    overflow: hidden;
 }
 
 .news-list{
@@ -411,13 +412,13 @@ STATS CONTAINER
     bottom: 0;
     right: 0;
     padding: 0px 70px 45px 0px;
-    color: rgb(158,214,0);
+    color: #17ff0f;
 }
 
 .line{
     padding:10px 0 6px 1.5%;
     min-height:45px;
-    border-top: 1px solid rgb(0,235,255);
+    border-top: 1px solid #17ff0f;
     float:right;
     text-align: right;
     font-size: 1.625em;
@@ -489,6 +490,8 @@ STATS CONTAINER
 
 .company {
     overflow: hidden;
+    height: 36px;
+    padding-right: 10px;
 }
 
 .scatter-container {
