@@ -144,6 +144,7 @@ def gen_tweet_line(item):
 			    </li>'.format(colour=item[4], emotion=item[0], score=item[1], headline=item[2], time=item[3])
     return Markup(new_line)
 
+
 def gen_news_line(item):
     if item[0] >= 0:
         arrow_line = '<span class="list-item-up-icon"> </span>'
@@ -157,6 +158,7 @@ def gen_news_line(item):
 				<span class="align-centre time">{time}</span>\
 			    </li>'.format(sentiment=item[0], arrow=arrow_line, source=item[1], content=item[2], time=item[3])
     return Markup(new_line)
+
 
 def twitter_thread():
     print("Starting twitter stream")
@@ -407,8 +409,8 @@ def bg_event(bg_data):
     bg_num = bg_data['bg_num']
     bg_screens = []
     for i in range(len(screens)):
-        if not os.path.exists('static/images/B%s_%s.jpg' % (screens[i], bg_num)):
-            print('static/images/B%s_%s.jpg does not exist' % (screens[i], bg_num))
+        if not os.path.exists('static/images/B%s_%s.jpg' % (bg_num, screens[i])):
+            print('static/images/B%s_%s.jpg does not exist' % (bg_num, screens[i]))
         else:
             bg_screens.append(screens[i])
     emit_queue.put(['update-bg', {'bg': bg_num, 'screens': bg_screens}, '/graphSock'])
