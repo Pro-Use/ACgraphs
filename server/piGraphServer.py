@@ -405,11 +405,13 @@ def bg_event(bg_data):
     print(bg_data)
     screens = bg_data['screens']
     bg_num = bg_data['bg_num']
-    for screen in screens:
-        if not os.path.exists('static/images/B%s_%s.jpg' % (screen, bg_num)):
-            print('static/images/screen%s_%s.jpg does not exist' % (screen, bg_num))
-            return
-    emit_queue.put(['update-bg', {'bg': bg_num, 'screens': screens}, '/graphSock'])
+    bg_screens = []
+    for i in range(len(screens)):
+        if not os.path.exists('static/images/B%s_%s.jpg' % (screens[i], bg_num)):
+            print('static/images/B%s_%s.jpg does not exist' % (screens[i], bg_num))
+        else:
+            bg_screens.append(screens[i])
+    emit_queue.put(['update-bg', {'bg': bg_num, 'screens': bg_screens}, '/graphSock'])
 
 
 @app.route('/heatmap')
