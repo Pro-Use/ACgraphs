@@ -211,7 +211,7 @@ def data_update_thread():
             #  Candle
             if new_tweet['hour'] != candle_hour:
                 new_candle_data = update_candle()
-                emit_queue.put(['update-candle', {'data':new_candle_data}, '/graphSock'])
+                # emit_queue.put(['update-candle', {'data':new_candle_data}, '/graphSock'])
                 candle_hour = new_tweet['hour']
             # Rolling News
                 new_results = news_api.get_everything(q='bisphenol', sort_by='relevancy', page_size=100, language='en')
