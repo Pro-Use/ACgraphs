@@ -35,12 +35,23 @@ $(document).ready(function() {
     });
 
     var screen_num = 5;
+    var current_bg = null
 
     socket.on('update-bg', function(msg) {
         console.log(msg)
         if (msg.screens.includes(screen_num)) {
-            $("body").css("background-size", "cover");
-            $("body").css("background-image", "url('static/images/screen"+screen_num+"_"+msg.bg+".jpg')");
+            $("#bg_"+msg.bg).show();
+            if (current_bg != null) {
+                $("#bg_"+current_bg).hide();
+            }
+            current_bg = msg.bg;
         }
     });
+
+    for (i = 0; i < 11; i++) {
+        $('body').append('<div id=bg_'+i+' class=page-bg></div>');
+        $("#bg_"+i).css("background-image", "url('static/images/b"+i+"_"+screen_num+".jpg')")
+    }
+
+    $('body').css('cursor', 'none');
  });

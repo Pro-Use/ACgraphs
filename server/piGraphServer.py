@@ -226,7 +226,7 @@ def data_update_thread():
                 new_html = get_news_html(articles)
                 if new_html is not None:
                     emit_queue.put(['update', {'ticker': 0, 'html': new_html}, '/graphSock'])
-                emit_queue.put(['update-news-list', {'html-arr': new_list_articles}, '/graphSock'])
+                # emit_queue.put(['update-news-list', {'html-arr': new_list_articles}, '/graphSock'])
         else:
             sleep(0.5)
 
@@ -310,16 +310,18 @@ def scatter_update_thread():
             company_data = company_data[0:100]
             happy = []
             sad = []
-            try:
-                for i in range(len(company_data)):
+            for i in range(len(company_data)):
+                try:
                     if company_data[i][1] >= 0:
                         happy.append([float(company_data[i][2]), float(company_data[i][0])])
                     else:
                         sad.append([float(company_data[i][2]), float(company_data[i][0])])
+                except TypeError as e:
+                    print(e)
+                    pass
                 emit_queue.put(['update-scatter', {'happy': happy, 'sad': sad, 'min_max':min_max}, '/graphSock'])
                 sleep(10)
-            except TypeError:
-                pass
+
 
 def update_candle():
     candle_con = sqlite3.connect('db/graphs_db.db')
@@ -352,15 +354,17 @@ def update_candle():
     new_candle_data = new_candle_data[-48:]
     return new_candle_data
 
+
 def update_thread():
     while True:
         if not emit_queue.empty():
             new_cmd = emit_queue.get()
             # if new_cmd[0] == 'update-scatter':
             socketio.emit(new_cmd[0], new_cmd[1], namespace=new_cmd[2])
-            # print("sent data to %s" % new_cmd[0])
+            print("sent data to %s" % new_cmd[0])
         else:
             socketio.sleep(0.5)
+
 
 @socketio.on('connect', namespace='/graphSock')
 def connect():
@@ -394,6 +398,7 @@ def connect():
                   {'news': "THE 10 SURPRISING THINGS YOU CAN'T RECYCLE",
                    'sentiment': 0.0},'/graphSock'])
     return
+
 
 @socketio.on('bg_change')
 def bg_event(bg_data):
@@ -525,7 +530,6 @@ if __name__ == '__main__':
             price_data.append([data[0][0:20], "£%.2f" % float(latest_price[i + 2])])
         except Exception:
             pass
-    print(pricing_models['Gazprom'])
 
 
     print('starting app')

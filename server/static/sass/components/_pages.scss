@@ -518,3 +518,14 @@ CANDLE CONTAINER
     color: rgb(158,214,0);
     font-size: 1.2em;
 }
+
+.page-bg {
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    top: 0px;
+    left: 0px;
+    background-size: cover;
+    z-index: 10;
+    display: none;
+}

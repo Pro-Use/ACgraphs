@@ -17,24 +17,35 @@ $(document).ready(function() {
     });
 
     var screen_num = $("body").data('screen');
+    var current_bg = null
 
     socket.on('update-bg', function(msg) {
         console.log(msg)
         if (msg.screens.includes(screen_num)) {
-            $("body").css("background-size", "cover");
-            $("body").css("background-image", "url('static/images/screen"+screen_num+"_"+msg.bg+".jpg')");
-            if (msg.bg == 1) {
-                $("list-container").css("color", "lime");
-            } else {
-                $("list-container").css("color", "white");
+            $("#bg_"+msg.bg).show();
+            if (current_bg != null) {
+                $("#bg_"+current_bg).hide();
             }
+            if ( [99,].includes(parseInt(msg.bg)) ){
+                $('li.news-list-item.row-max.green').css('color', '#fff;')
+            } else {
+                $('li.news-list-item.row-max.green').css('color', '#9ed600;')
+            }
+            current_bg = msg.bg;
         }
     });
+
+    for (i = 0; i < 11; i++) {
+        $('body').append('<div id=bg_'+i+' class=page-bg></div>');
+        $("#bg_"+i).css("background-image", "url('static/images/b"+i+"_"+screen_num+".jpg')")
+    }
 
     socket.on('change', function(msg){
       var parent = document.getElementById('news');
       parent.insertBefore(parent.firstElementChild, parent.lastElementChild);
     });
 
-    update_news();
+//    update_news();
+
+    $('body').css('cursor', 'none');
  });
