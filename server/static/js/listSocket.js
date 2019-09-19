@@ -37,7 +37,7 @@ $(document).ready(function() {
 
     for (i = 0; i < 11; i++) {
         $('body').append('<div id=bg_'+i+' class=page-bg></div>');
-        $("#bg_"+i).css("background-image", "url('static/images/b"+i+"_"+screen_num+".jpg')")
+        $("#bg_"+i).css("background-image", "url('static/images/B"+i+"_"+screen_num+".jpg')")
     }
 
     socket.on('change', function(msg){
