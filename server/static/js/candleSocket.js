@@ -9,6 +9,8 @@ $(document).ready(function() {
             });
 
     socket.on('update-candle', function(msg) {
+        new_data = [];
+
         candlechart.updateSeries([{data:[
             msg.data
         ]}])
@@ -21,9 +23,9 @@ $(document).ready(function() {
         console.log(msg)
         if (msg.screens.includes(screen_num)) {
             $("#bg_"+msg.bg).show();
-            if (current_bg != null) {
-                $("#bg_"+current_bg).hide();
-            }
+//            if (current_bg != null) {
+//                $("#bg_"+current_bg).hide();
+//            }
             current_bg = msg.bg;
         }
     });
