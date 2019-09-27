@@ -213,7 +213,12 @@ def data_update_thread():
             #  Candle
             if new_tweet['hour'] != candle_hour:
                 new_candle_data = update_candle()
-                # emit_queue.put(['update-candle', {'data':new_candle_data}, '/graphSock'])
+                xy_candle_data = []
+                for item in new_candle_data:
+                    xy_candle_data.append(
+                        {'x': item[0],
+                         'y': item[1]},)
+                # emit_queue.put(['update-candle', {'data':xy_candle_data}, '/graphSock'])
                 candle_hour = new_tweet['hour']
             # Rolling News
                 new_results = news_api.get_everything(q='bisphenol', sort_by='relevancy', page_size=100, language='en')
@@ -301,10 +306,10 @@ def scatter_update_thread():
         for company in pricing_models:
             u_con = sqlite3.connect('db/graphs_db.db')
             u_cursor = u_con.cursor()
-            u_cursor.execute('''SELECT min("{0}"), max("{0}") FROM prices'''
-                             .format(company.replace(' ', '')))
-            min_max = u_cursor.fetchall()
-            min_max = min_max[0]
+            # u_cursor.execute('''SELECT min("{0}"), max("{0}") FROM prices'''
+            #                  .format(company.replace(' ', '')))
+            # min_max = u_cursor.fetchall()
+            # min_max = min_max[0]
             u_cursor.execute('''SELECT "{company}", sentiment, date_time
                                     FROM prices'''.format(**{"company": company.replace(' ', '')}))
             company_data = u_cursor.fetchall()
@@ -312,17 +317,25 @@ def scatter_update_thread():
             company_data = company_data[0:100]
             happy = []
             sad = []
-            for i in range(len(company_data)):
+            prices = []
+            for i in range(1, len(company_data)):
+                prev_price = 100 / float(company_data[i - 1][0])
+                price_dif = prev_price * float(company_data[i][0])
                 try:
                     if company_data[i][1] >= 0:
-                        happy.append([float(company_data[i][2]), float(company_data[i][0])])
+                        happy.append([float(company_data[i][2]), price_dif])
                     else:
-                        sad.append([float(company_data[i][2]), float(company_data[i][0])])
+                        sad.append([float(company_data[i][2]), price_dif])
+                    prices.append(price_dif)
                 except TypeError as e:
                     print(e)
                     pass
-                emit_queue.put(['update-scatter', {'happy': happy, 'sad': sad, 'min_max':min_max}, '/graphSock'])
-                sleep(10)
+            if len(prices) > 0:
+                min_max = [min(prices), max(prices)]
+            else:
+                min_max = [0, 1]
+            emit_queue.put(['update-scatter', {'happy': happy, 'sad': sad, 'min_max':min_max}, '/graphSock'])
+            sleep(10)
 
 
 def update_candle():
