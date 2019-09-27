@@ -366,7 +366,7 @@ def update_candle():
         low = row[3]
         new_candle_data.append([int(timestamp), [opening, high, low, closing]])
     # new_candle_data.reverse()
-    new_candle_data = new_candle_data[-48:]
+    new_candle_data = new_candle_data[-60:]
     return new_candle_data
 
 
