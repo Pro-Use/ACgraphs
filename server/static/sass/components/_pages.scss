@@ -526,6 +526,17 @@ CANDLE CONTAINER
     top: 0px;
     left: 0px;
     background-size: cover;
-    z-index: 10;
+    z-index: -9;
     display: none;
+}
+
+#bar_labels {
+    position: absolute;
+    font-size: 4.2em;
+    font-family: doublet;
+    line-height: 1.3em;
+    top: -10px;
+    right: 70px;
+    text-align: right;
+    color: #9ed600;
 }
