@@ -3,11 +3,11 @@
 <body class="news">
 
 <div id="candle" style="height: 100%; width: 100%;"></div>
-<!--<div class="candle_text">-->
-    <!--{% for i in range(49) %}-->
-    <!--<span class="hour">{{ -49 + i }}</span>-->
-    <!--{% endfor %}-->
-<!--</div>-->
+<div class="candle_text">
+    {% for i in range(49) %}
+    <span class="hour">{{ -49 + i }}</span>
+    {% endfor %}
+</div>
 <script>
 	  var candle_options = {
       chart: {
