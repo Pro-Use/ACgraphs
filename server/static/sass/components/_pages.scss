@@ -506,8 +506,9 @@ CANDLE CONTAINER
 
 .candle_text {
     display: flex;
-    position: relative;
-    top: -50px;
+    position: absolute;
+    bottom: 20px;
+    width: 100vw;
     margin-left: 10px;
     margin-right: 10px;
 }
@@ -539,4 +540,16 @@ CANDLE CONTAINER
     right: 70px;
     text-align: right;
     color: #9ed600;
+}
+
+.scatter_text {
+    position: absolute;
+    width: 1350px;
+    bottom: 20px;
+    font-family: doublet;
+    font-size: 19px;
+    overflow: hidden;
+    text-align: right;
+    height: 1.5em;
+    display: flex;
 }

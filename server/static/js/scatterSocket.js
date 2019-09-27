@@ -15,14 +15,17 @@ $(document).ready(function() {
                 min: parseFloat(msg.min_max[0]),
                 max: parseFloat(msg.min_max[1]),
                 labels: {
-                    show: false,
+                    show: true,
                     align: 'left',
                     style: {
                       color: 'rgb(158,214,0)',
-                      fontSize: '30px',
+                      fontSize: '19px',
                       fontFamily: 'doublet',
                       cssClass: 'scatter-yaxis-label',
-                  },
+                    },
+                    formatter: function(val, index) {
+                        return Math.round(val) + '%';
+                    },
                 },
               }
             })

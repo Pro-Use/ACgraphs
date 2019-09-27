@@ -1,6 +1,7 @@
 {% extends "layout.html" %}
 {% block body %}
 <body class="stats-page" style="overflow:hidden;background-image:url()">
+
 <div class="scatter-container">
     <div id="scatter"></div>
     <div id="prices">
@@ -13,6 +14,11 @@
         </ul>
     </div>
 </div>
+    <div class="scatter_text">
+    {% for i in range(11) %}
+    <span class="hour">{{ 0 - (i * 10 )}}</span>
+    {% endfor %}
+    </div>
 <script>
     var options = {
             chart: {
@@ -38,11 +44,11 @@
             },
             yaxis: {
                 labels: {
-                    show: false,
-                    align: 'right',
+                    show: true,
+                    align: 'left',
                     style: {
                       color: 'rgb(158,214,0)',
-                      fontSize: '30px',
+                      fontSize: '19px',
                       fontFamily: 'doublet',
                       cssClass: 'scatter-yaxis-label',
                   },
@@ -64,13 +70,22 @@
                 tickPlacement: 'on',
                 labels: {
                     show: false,
+                    color: 'rgb(158,214,0)',
+                    fontSize: '19px',
+                    fontFamily: 'doublet',
+                    cssClass: 'scatter-yaxis-label',
+                    formatter: function(val, index) {
+                        dateObj = new Date(val * 1000);
+                        utcString = dateObj.toUTCString();
+                        return utcString.slice(-11, -4);
+                    },
                 },
                 axisBorder: {
-                    show: false,
-                    color: 'blue',
+                    show: true,
+                    color: 'rgb(158,214,0)',
                 },
                 axisTicks: {
-                      show: false,
+                      show: true,
                       borderType: 'solid',
                       color: 'blue',
                       height: 20,
