@@ -14,7 +14,7 @@ $(document).ready(function() {
         addPoint(msg.lat, msg.lng);
     });
 
-    var screen_num = 2;
+    var screen_num = 1;
     var current_bg = null
 
     socket.on('update-bg', function(msg) {
